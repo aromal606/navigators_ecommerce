@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+
+<body class="page-template belle cart-variant1">
+    <div class="pageWrapper">
+        <!--Search Form Drawer-->
+
+        <!--End Search Form Drawer-->
+
+
+        <!--Mobile Menu-->
+
+        <!--End Mobile Menu-->
+
+        <!--Body Content-->
+        <div id="page-content">
+            <!--Page Title-->
+            <div class="page section-header text-center">
+                <div class="page-title">
+                    <div class="wrapper">
+                        <h1 class="page-width">Shopping Cart</h1>
+                    </div>
+                </div>
+            </div>
+            <!--End Page Title-->
+
+            <div class="container">
+                <div class="row" id="myDiv">
+
+                    {{!-- <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col " id="myDiv"> --}}
+                        <div class="alert alert-success text-uppercase" role="alert">
+                            <i class="icon anm anm-truck-l icon-large"></i> &nbsp;<strong>Congratulations!</strong>
+                            You've got free shipping!
+                        </div>
+                        <div class="a  d-flux" id="data" style="overflow-x:auto;">
+                            {{!-- <form class="cart style2"> --}}
+                                <table class="tbl">
+                                    <thead class="cart__row cart__header">
+                                        <tr>
+                                            <th colspan="2" class="text-center">Product</th>
+                                            <th class="text-center">Price</th>
+                                            <th class="text-center">Quantity</th>
+                                            <th class="text-right">Total</th>
+                                            <th class="action">&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    {{#each products}}
+                                    <tbody id="table_id">
+                                        <tr class="cart__row border-bottom line1 cart-flex border-top">
+
+                                            <td class="cart__image-wrapper cart-flex-item">
+                                                <a href="#"><img class="cart__image"
+                                                        src="/pro_img/{{this.product.img.[0]}}" alt=""
+                                                        style="width:80px ;height:90px"></a>
+                                            </td>
+                                            <td class="cart__meta small--text-left cart-flex-item">
+                                                <div class="list-view-item__title">
+                                                    <a href="#">{{this.product.productname}} </a>
+                                                </div>
+
+
+                                                {{!-- <div class="cart__meta-text">
+                                                    Color: Navy<br>Size: Small<br>{{this.product.stock}}
+                                                </div> --}}
+                                            </td>
+                                            <td class="cart__price-wrapper cart-flex-item">
+                                                <p class="money " id="proprice{{product._id}}">
+                                                    {{this.priceAfterDiscount}}</p>
+                                            </td>
+
+                                            <td class="cart__update-wrapper cart-flex-item text-right">
+                                                <div class="cart__qty text-center">
+                                                    <div class="qtyField" id="qtyDiv">
+
+                                                        <button name="minus" class="minusButton qtyBtn minus"
+                                                            id="minusButton{{this.product._id}}"
+                                                            onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.quantity}}',{{this.product.stock}},-1)"><i
+                                                                class="icon icon-minus" id="minus"></i>
+                                                        </button>
+
+                                                        <button class="qtyBtn">
+                                                            <i id="quantity{{this.product._id}}"
+                                                                class="icon icon">{{this.quantity}}</i>
+                                                        </button>
+
+
+
+                                                        <button class="plusButton qtyBtn plus"
+                                                            onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.quantity}}',{{this.product.stock}},1)"><i
+                                                                class="icon icon-plus"></i>
+
+                                                        </button>
+
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-danger mt-1" id="stockname{{this.product._id}}">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right small--hide cart-price">
+                                                <div><span id="productTotal{{this.product._id}}"
+                                                        class="money">{{this.totalAfterDiscount}}</span></div>
+                                            </td>
+                                            <td class="text-center small--hide">
+                                                <div class="class">
+
+
+                                                    <button class="btn btn--secondary cart__remove fa fa-close "
+                                                        title="Remove tem"
+                                                        onclick="removeCartItem('{{this._id}}','{{this.product._id}}')">
+
+                                                </div>
+                                                </input>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                    {{/each}}
+
+                                    <tfoot>
+                                        <tr>product
+                                            <td colspan="3" class="text-left"><a href="/product_show"
+                                                    class="btn btn-secondary btn--small cart-continue">Continue
+                                                    shopping</a>
+                                            </td>
+                                            <td colspan="3" class="text-right">
+                                                <button type="" name="clear"
+                                                    class="btn btn-secondary btn--small  small--hide">Clear
+                                                    Cart</button>
+                                                <button type="" name="update"
+                                                    class="btn btn-secondary btn--small cart-continue ml-2">Update
+                                                    Cart</button>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </form>
+
+
+
+
+                            <div class="solid-border">
+
+                                <div class="row border-bottom pb-2 pt-2">
+                                    <span class="col-12 col-sm-6 cart__subtotal-title">Tax</span>
+                                    <span class="col-12 col-sm-6 text-right">$00.00</span>
+                                </div>
+                                <div class="row border-bottom pb-2 pt-2">
+                                    <span class="col-12 col-sm-6 cart__subtotal-title">Shipping</span>
+                                    <span class="col-12 col-sm-6 text-right">Free shipping</span>
+                                </div>
+                                <div class="row border-bottom pb-2 pt-2">
+                                    <span class="col-12 col-sm-6 cart__subtotal-title"><strong>Sub
+                                            Total</strong></span>
+                                    <span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span
+                                            id="grandTotal" class="money">{{grandtotal}}</span></span>
+                                </div>
+                                <div class="cart__shipping">Shipping &amp; taxes calculated at checkout</div>
+                                <p class="cart_tearm">
+                                    <label>
+                                        <input type="checkbox" name="tearm" class="checkbox" value="tearm" required="">
+                                        I agree with the terms and conditions
+                                    </label>
+                                </p>
+                                <div class="mb-2" style="position: relative; margin-left: 40%;">
+
+
+                                    <a href="/place_order">
+                                        <input type="submit" name="checkout" id="cartCheckout"
+                                            class="btn btn-success  checkout" value="Proceed To Checkout"
+                                            style="width: 350px;"></a>
+                                    {{!-- <div class="paymne"><img src="/images/payment-img.jpg" alt="Payment"> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End Body Content-->
+        </div>
+
+
+
+</body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

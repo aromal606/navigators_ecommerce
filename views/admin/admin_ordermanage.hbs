@@ -1,0 +1,330 @@
+{{!-- <html> --}}
+
+<main id="main" class="main">
+
+    <head>
+        <style>
+            #btn: {
+                border-radius: 9px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+
+
+
+
+
+        <div class="pagetitle" style="padding-left:7%">
+            <h1></h1>
+
+        </div>
+        <!-- End Page Title -->
+
+
+
+
+        <div class="container mt-5 ">
+
+
+            <div id="page-content">
+                <!--Page Title-->
+                <div class="page section-header text-center">
+                    <div class="page-title">
+                        <div class="wrapper">
+                            <h1 class="page-width">Order Details</h1>
+                        </div>
+                    </div>
+                </div>
+                <!--End Page Title-->
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                            <form action="#">
+                                <div class="wishlist-table table-content table-responsive" id="btnRefresh">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="product-name text-center alt-font">no</th>
+
+                                                <th class="product-name text-center alt-font">order No</th>
+                                                <th class="product-price text-center alt-font">purchase date</th>
+                                                {{!-- <th class="product-name alt-font">Delivery details</th> --}}
+                                                <th class="product-price text-center alt-font">total amount</th>
+                                                <th class="stock-status text-center alt-font">payment method</th>
+                                                <th class="stock-status text-center alt-font">current status</th>
+                                                <th class="product-subtotal text-center alt-font"> set status </th>
+                                                <th class="product-subtotal text-center alt-font"> payment status </th>
+                                                <th class="product-subtotal text-center alt-font">more</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each orders}}
+                                            <tr>
+                                                <td class="product-name">
+                                                    <h4 class="no-margin"><a href="#">{{inc @index}}</a></h4>
+                                                </td>
+
+                                                <td class="product-name">
+                                                    <h4 class="no-margin"><a href="#">{{this._id}}</a></h4>
+                                                </td>
+                                                <td class="product-name">
+                                                    <h4 class="no-margin"><a href="#">{{this.orderDetails.date}}</a>
+                                                    </h4>
+                                                </td>
+                                                {{!-- <td class="product-name">
+                                                    <h4 class="no-margin"><a href="#">Name:
+                                                            {{this.orderDetails.deliveryDetails.name}}<br>Address:
+                                                            {{this.orderDetails.deliveryDetails.address}}<br>{{this.orderDetails.deliveryDetails.state}}<br>
+                                                            {{this.orderDetails.deliveryDetails.district}}<br>{{this.orderDetails.deliveryDetails.pincode}}
+                                                    </h4>
+                                                </td> --}}
+                                                <td class="product-price text-center"><span
+                                                        class="amount">{{this.orderDetails.totalAmount}}</span></td>
+                                                <td class="product-name">
+                                                    <h4 class="no-margin"><a
+                                                            href="#">{{this.orderDetails.paymentMethod}}</a></h4>
+                                                </td>
+                                                <td class="product-price text-center">
+                                                    {{#ifCond this.orderDetails.status "order canceled"}}
+                                                    <span
+                                                        class="amount text-danger">{{this.orderDetails.status}} </span><br>
+                                                    {{else}}
+                                                    <span class="amount">{{this.orderDetails.status}}</span>
+                                                    {{/ifCond}}
+                                                    {{#ifCond this.orderDetails.refund "complete"}}<br>
+                                                    {{!-- <span class="amount text-success">refund completed</span> --}}
+                                                    {{else}}
+
+                                                    {{/ifCond}}
+
+                                                </td>
+
+                                                <td class="stock text-center" style="height: 50px;">
+                                                    {{#ifCond this.orderDetails.status "return request"}}
+                                                    <div class="">
+                                                        <p class="text-danger">return requst</p>
+                                                        <button class="btn btn-success"
+                                                            onclick="deliveryStatus('{{this._id}}','return accepted')">APPROVE</button>
+                                                        <button class="btn btn-danger"
+                                                            onclick="deliveryStatus('{{this._id}}','return rejected')">REJECT</button>
+
+                                                    </div>
+                                                    {{else}}
+                                                    <div class="btn-group">
+                                                        {{!-- --}}
+                                                        {{!-- <select class="form-select"
+                                                            aria-label="Default select example" name="category">
+                                                            {{#each allcategory}}
+                                                            <option id="{{this._id}}" value="{{this.categoryname}}">
+                                                                {{this.categoryname}}</option>
+
+                                                            {{/each}}
+                                                        </select> --}}
+                                                        {{!-- --}}
+                                                        <button style="height: 50px;"
+                                                            class="btn btn-secondary rounded-pill btn-lg dropdown-toggle"
+                                                            type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                                            aria-haspopup="true"
+                                                            aria-expanded="false">{{this.orderDetails.status}}
+
+                                                            <div class="dropdown-menu"
+                                                                aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item"
+                                                                    onclick="deliveryStatus('{{this._id}}','shipped')">shipped</a>
+                                                                <a class="dropdown-item"
+                                                                    onclick="deliveryStatus('{{this._id}}','delivered')">delivered
+                                                                </a>
+                                                              
+                                                            </div>
+                                                    </div>
+
+
+                                                    {{/ifCond}}
+                                                </td>
+                                                <td>
+                                                    {{!-- razorpay --}}
+                                                    {{#razorpayReFn this.orderDetails.refund this.orderDetails.paymentMethod this.orderDetails.status}}
+                                                     <a href="/admin/return-payment/{{this._id}}/{{this.orderDetails.userId}}"
+                                                        class="btn btn-info rounded-pill">approve</a>
+                                                    {{/razorpayReFn}}
+                                                        {{#razorpayfn this.orderDetails.refund this.orderDetails.paymentMethod this.orderDetails.status}}
+                                                    <span class="amount text-success">refund completed</span>
+                                                    
+                                                    {{/razorpayfn}}
+                                                    {{!-- paypal --}}
+                                                     {{#paypalReFn this.orderDetails.refund this.orderDetails.paymentMethod this.orderDetails.status}}
+                                                     <a href="/admin/return-payment/{{this._id}}/{{this.orderDetails.userId}}"
+                                                        class="btn btn-info rounded-pill">approve</a>
+                                                    {{/paypalReFn}}
+                                                        {{#paypalfn this.orderDetails.refund this.orderDetails.paymentMethod this.orderDetails.status}}
+                                                    <span class="amount text-success">refund completed</span>
+                                                    {{/paypalfn}}
+                                                    {{!-- cod --}}
+                                                     {{#codReFn this.orderDetails.refund this.orderDetails.paymentMethod this.orderDetails.status}}
+                                                     <a href="/admin/return-payment/{{this._id}}/{{this.orderDetails.userId}}"
+                                                        class="btn btn-info rounded-pill">approve</a>
+                                                    {{/codReFn}}
+                                                        {{#codfn this.orderDetails.refund this.orderDetails.paymentMethod this.orderDetails.status}}
+                                                    <span class="amount text-success">refund completed</span>
+                                                    {{/codfn}}
+                                                    {{!-- wallet --}}
+                                                     {{#walletReFn this.orderDetails.refund this.orderDetails.paymentMethod this.orderDetails.status}}
+                                                     <a href="/admin/return-payment/{{this._id}}/{{this.orderDetails.userId}}"
+                                                        class="btn btn-info rounded-pill">approve</a>
+                                                    {{/walletReFn}}
+                                                        {{#walletfn this.orderDetails.refund this.orderDetails.paymentMethod this.orderDetails.status}}
+                                                    <span class="amount text-success">refund completed</span>
+                                                    {{/walletfn}}
+                                                </td>
+                                                <td>
+                                                    <!-- Button trigger modal -->
+
+                                                    <button type="button" class=" border-0" data-toggle="modal"
+                                                        data-target="#{{this._id}}"><i class="bi bi-eye-fill fa-2x"></i>
+
+
+                                                    </button>
+
+                                                    <!-- Modal -->
+
+
+                                                    <div class="modal fade" id="{{this._id}}" tabindex="-1"
+                                                        role="dialog" aria-labelledby="exampleModalLabel"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                                        View</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <table style="height:10px;width:700px">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">no</th>
+                                                                                <th scope="col">name</th>
+                                                                                <th scope="col">image</th>
+                                                                                <th scope="col">quantity</th>
+                                                                                {{!-- <th scope="col">address</th> --}}
+                                                                                <th scope="col">price</th>
+
+
+
+                                                                            </tr>
+                                                                        </thead>
+
+                                                                        {{#each this.productList}}
+
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th scope="row">{{inc @index}}</th>
+                                                                                <td>
+                                                                                    {{this.product.productname}}
+                                                                                </td>
+                                                                                <td
+                                                                                    class="cart__image-wrapper cart-flex-item">
+
+                                                                                    <a href="#"><img class="cart__image"
+                                                                                            src="/pro_img/{{this.product.img.[0]}}"
+                                                                                            alt=""></a>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    {{this.quantity}}
+                                                                                </td>
+                                                                              
+
+                                                                                <td>
+                                                                                    {{this.product.price}}
+                                                                                </td>
+
+
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        {{/each}}
+                                                                        
+                                                                        <div class="mb-2">
+                                                                              <p style="">
+                                                                                    NAME:{{this.orderDetails.deliveryDetails.name}}<br>ADDRESS:
+                                                                                    {{this.orderDetails.deliveryDetails.address}},
+                                                                                    {{this.orderDetails.deliveryDetails.city}}&ensp;
+                                                                                    {{this.orderDetails.deliveryDetails.state}}<br>PIN:
+                                                                                    {{this.orderDetails.deliveryDetails.pincode}}&emsp;PHONE:
+                                                                                    {{this.orderDetails.deliveryDetails.phone}}
+                                                                                </p>
+                                                                        </div>
+
+                                                                        
+
+                                                                    </table>
+                                                                    {{!-- <p>{{this.orderDetails.paymentMethod}}</p>
+                                                                    --}}
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            {{/each}}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+    </body>
+</main>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+    function deliveryStatus(a, b) {
+        console.log("----------------");
+        console.log(a);
+        console.log(b);
+
+        console.log("-----------------");
+        $.ajax({
+            url: '/admin/deliveryStatusUpdation',
+            method: 'post',
+            data: {
+                orderId: a,
+                status: b
+            },
+            success: (response) => {
+                if (response) {
+                    $("#btnRefresh").load(" #btnRefresh");
+
+                }
+            }
+        })
+
+    }
+    function productView(orderId) {
+        alert(orderId)
+
+    }
+</script>
+
+{{!--
+
+</html> --}}

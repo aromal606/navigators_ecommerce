@@ -1,0 +1,184 @@
+<main id="main" class="main">
+
+  <body>
+
+    <div class="container tm-mt-big tm-mb-big">
+      <div class="row">
+
+        <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+          <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+            <div class="row">
+              <div class="col-12">
+
+                <h2 class="tm-block-title d-inline-block">Add Coupon</h2>
+              </div>
+            </div>
+            <div class="row tm-edit-product-row">
+              <div class="col-xl-6 col-lg-6 col-md-12">
+
+                <form action="/admin/coupon-generator" method="POST" class="tm-edit-product-form">
+                <div class="form-group mb-3">
+                    <label for="name">Coupon Title
+                    </label>
+                    <input id="Coupon" name="Coupontitle" type="text" class="form-control validate" required>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="name">Coupon Code
+                    </label>
+                    <input id="Coupon" name="Coupon" type="text" class="form-control validate" required>
+                  </div>
+
+                  <div class="form-group mb-3">Offer Percentage
+                    <label for="name">
+                    </label>
+                    <input id="offer" name="Offer_Percentage" type="number" class="form-control validate" required
+                      onkeyup="return check()">
+                  </div>
+                  <p class="text-danger" style="display: none;" id="msg">limited upto 20%</p>
+                  <div class="form-group mb-3">Max Offer Amount
+                    <label for="name">
+                    </label>
+                    <input id="offer" name="max_amount" type="number" class="form-control validate" required>
+                  </div>
+                 
+
+                  <div class="form-group mb-3">
+                    <label for="name">Expiry date
+                    </label>
+                    <input id="date" name="Expiry_date" type="date" class="form-control validate" required>
+                  </div>
+
+                  <div class="col-xl-6 col-lg-6 col-md-12 mt-3">
+                    <button id="couponButton" type="submit" class="btn btn-primary "
+                      onclick="validate()">Generate</button>
+
+                  </div>
+
+                </form>
+                <button id="couponButton1" style="display: none;" class="btn btn-primary ">Generate</button>
+              </div>
+
+              <div class="col-12">
+                <table class="table table-bordered mt-3">
+                  <thead>
+                    <tr>
+                      <th style="in" scope="col">No</th>
+                      <th scope="col">title</th>
+                      <th scope="col">Code</th>
+                      <th scope="col">offer Percentage</th>
+                      <th scope="col">Max Offer Amount</th>
+                      <th scope="col">Expirydate</th>
+                      {{!-- <th>status</th> --}}
+                      <th scope="col">Action</th>
+
+                    </tr>
+                  </thead>
+
+
+                  <tbody>
+                    <div class="container">
+
+                    </div>
+
+                    {{#each coupon}}
+                    <tr>
+                      <td scope="row"></td>
+                      <td>{{this.Coupontitle}}</td>
+                      <td>{{this.Coupon}}</td>
+                      <td>{{this.Offer_Percentage}}</td>
+                      <td>{{this.max_amount}}</td>
+                      <td>{{this.Expiry_date}}</td>
+
+                      {{!-- <td>{{this.category}}</td> --}}
+
+
+
+
+                      <td>
+
+                        <a style="width: 100px;" href="/admin/delete-coupon/{{this._id}}"
+                          onclick="return confirm('Are you want to delete {{this.coupon}} ?')"><button
+                            class="btn btn-success" onclick="return confirm(are you sure)">delete</button></a>
+                      </td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        </section>
+        <script>
+          var table = document.getElementsByTagName('table')[0],
+            rows = table.getElementsByTagName('tr'),
+            text = 'textContent' in document ? 'textContent' : 'innerText';
+
+          for (var i = 1, len = rows.length; i < len; i++) {
+            rows[i].children[0][text] = i;
+          }
+
+        </script>
+
+
+
+
+
+
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <footer class="tm-footer row tm-mt-small">
+
+    </footer>
+
+    {{!--
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
+    <!-- https://jqueryui.com/download/ -->
+    <script src="js/bootstrap.min.js"></script> --}}
+    <!-- https://getbootstrap.com/ -->
+    <script>
+      $(function () {
+        $("#expire_date").datepicker();
+      });
+    </script>
+    <script>
+      function check() {
+
+        let ofrnumber = document.getElementById('offer').value
+
+        if (ofrnumber <= 20) {
+          document.getElementById('msg').style.display = 'none'
+          document.getElementById('couponButton').style.display = 'block'
+          document.getElementById('couponButton1').style.display = 'none'
+
+          return true;
+          //return true
+        } else {
+
+          document.getElementById('msg').style.display = 'block'
+          document.getElementById('couponButton').style.display = 'none'
+          document.getElementById('couponButton1').style.display = 'block'
+
+
+          return false;
+        }
+
+      }
+    </script>
+    <script>
+      function validate() {
+
+      }
+    </script>
+
+
+    <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
+    </div>
+  </body>

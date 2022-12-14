@@ -1,0 +1,172 @@
+<main id="main" class="main">
+
+  <body>
+    <div class="pagetitle" style="padding-left:0%">
+      <h1>Category Management</h1>
+
+    </div>
+    <!-- End Page Title -->
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Add Category
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Add category name</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="/admin/addcategory" method="post">
+            <div class="modal-body">
+
+              <div class="row">
+                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                  <label for="input-categoryname">category name <span class="required-f">
+                    </span></label>
+                  <input name="categoryname" value="" id="input-firstname" type="text">
+                </div>
+
+                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                  <label for="input-categoryname">category offer <span class="required-f">
+                    </span></label>
+
+                  <input name="coffer" value="" id="input-firstname" type="text">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+        </form>
+      </div>
+    </div>
+
+
+    <table class="table table-bordered text-center mt-3" id="">
+      <thead>
+        <tr style="text-align: ;">
+          <th scope="col">no</th>
+
+          <th scope="col">parent category</th>
+
+
+
+
+          <th>offer</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each categories}}
+        <tr class="text-center align-middle">
+
+          <td scope="row">{{inc @index}}</td>
+
+          <td>{{this.categoryname}}</td>
+
+
+
+
+
+
+
+          <td>{{this.coffer}}
+
+          </td>
+
+          <td>
+            {{!-- {{#if status}} --}}
+            <button type="button" class="bi bi-pen-fill border-0" data-toggle="modal" data-target="#{{this._id}}">
+
+            </button>
+            <button type="button" class=" bi bi-trash-fill border-0" data-toggle=""
+              onclick="removeCategory('{{this._id}}')">
+
+            </button>
+            {{/each}}
+            <!-- Modal -->
+            {{#each categories}}
+            <div class="modal fade" id="{{this._id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">edit category name</h1>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                        <label for="input-categoryname">category name <span class="required-f">
+                          </span></label>
+                        <form action="/admin/editcategory/{{this._id}}" method="post">
+                          <input name="categoryname" value="{{this.categoryname}}" id="input-categoryname" type="text">
+                      </div>
+                      <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                        <label for="input-categoryname">category offer <span class="required-f">
+                          </span></label>
+
+                        <input name="coffer" value="" id="input-firstname" type="text">
+                      </div>  
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </td>
+
+        </tr>
+
+      </tbody>
+    </table>
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+    <script>
+      function removeCategory(id) {
+        alert(id)
+        $.ajax({
+          url: '/admin/removecategory',
+          method: 'post',
+          data: {
+            catId: id
+          },
+          success: (Response) => {
+            alert('1111111111111')
+            location.reload()
+          }
+
+
+        })
+
+
+      }
+    </script>
+
+    <script>
+      function updateCoffer(cId) {
+
+        let ofervalue = document.getElementById('ofr').value
+        alert(cId)
+        alert(ofervalue)
+      }
+    </script>
+
+
+  </body>
+
+  </html>

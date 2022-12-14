@@ -1,0 +1,58 @@
+<head>
+<link rel="stylesheet"
+          href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+   
+  
+ <main id="main" class="main">
+<i class="fa-regular fa-chalkboard-user"></i>
+    <div class="pagetitle" style="padding-left:7%">
+      <h1>User management</h1>
+      
+    </div>
+    <!-- End Page Title -->
+
+    
+<div class="container mt-5">
+    <div class="row">
+     
+
+    </div>
+    <table class="table table-bordered text-center" id="">
+      <thead>
+        <tr style="text-align: ;">
+          <th scope="col">no</th>
+          <th scope="col">name</th>
+          <th scope="col">mob no</th>
+          <th scope="col">email</th>
+          <th>Action</th>
+          {{!-- <th></th> --}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each user}}
+        <tr class="text-center align-middle">
+          <td scope="row">{{inc @index}}</td>
+  
+          <td>{{this.name}}</td>
+          <td>{{this.mobno}}</td>
+          <td>{{this.email}}</td>
+          
+        <td>
+            {{#if status}}
+           <a  class="btn btn-primary mb-2" style="width: 100px; background-color: red;" href="/admin/blockUser/{{this._id}}" >Block</a>
+{{else}}
+            <a  class="btn btn-success" style="width: 100px; background-color: green;" href="/admin/unBlockUser/{{this._id}}">UnBlock</a>
+         {{/if}}
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    
+  </div>
+</body>
+
+</html>

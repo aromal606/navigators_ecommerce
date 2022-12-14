@@ -1,0 +1,147 @@
+<div class="page section-header text-center">
+			<div class="page-title">
+        		<div class="wrapper"><h1 class="page-width">Create an Account</h1></div>
+      		</div>
+		</div>
+        <!--End Page Title-->
+        
+        <div class="container">
+        	<div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
+                	<div class="mb-4">
+                       <form method="post" action="/signup" id="CustomerLoginForm" accept-charset="UTF-8" class="contact-form" onclick="return check()">	
+                          <div class="row">
+	                          <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label for="FirstName">Name</label>
+                                    <input type="text" name="name" placeholder="" id="Name" autofocus="" onkeyup="validateName()">
+                                    <span id="name" class="text-danger"></span>
+
+                                </div>
+                               </div>
+                               
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label for="CustomerEmail">Email</label>
+                                    <input type="email" name="email" placeholder="" id="Email" onkeyup="validEmail()" class="" autocorrect="off" autocapitalize="off" autofocus="">
+                                <span id="email" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label for="CustomerEmail">mob no</label>
+                                    <input type="text" name="mobno" placeholder="" id="phonenumber" onkeyup="validPhoneumber()" class="" autocorrect="off" autocapitalize="off" autofocus="">
+                               <span id="phonenumbers" class="text-danger" ></span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label for="CustomerPassword">Password</label>
+                                    <input type="password" value="" name="password" placeholder="" id="password" onkeyup="validPassowrd()" class="">
+                                    <span id="passwords" class="text-danger">{{this.errormsg}}</span>                        	
+                                </div>
+                                {{!-- <div class="form-group">
+                                    <label for="CustomerPassword">Confirm Password</label>
+                                    <input type="password" value="" name="password" placeholder="" id="cPassword" onkeyup="cPassowrd()" class="">  
+                                     <span id="cpasswords" class="text-danger"></span >                     	
+                                </div> --}}
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">
+                                <input type="submit" class="btn mb-3" value="Create">
+                            </div>
+                         </div>
+                     </form>
+                    </div>
+               	</div>
+            </div>
+        </div>
+        
+    </div>
+    <script>
+    var errorName = document.getElementById('name')
+    var errorEmail = document.getElementById('email')
+    var errorPhonenumber = document.getElementById('phonenumbers')
+    var errorPassword = document.getElementById('passwords')
+
+	function validateName() {
+        const name = document.getElementById('Name').value;
+        if (name == "") {
+            errorName.innerHTML = 'Enter your Name'
+            return false
+        }
+        if (!name.match(/^[a-zA-Z ]*$/)) {
+            errorName.innerHTML = 'Number are not allowed'
+            return false
+        }
+         if (name.match(/^[ ]*$/)) {
+            errorName.innerHTML = 'enter a valid name'
+            return false
+        }
+        errorName.innerHTML = null
+        return true
+    }
+    function validEmail() {
+        const email = document.getElementById('Email').value
+        if (email == "") {
+            errorEmail.innerHTML = "enter you email address"
+            return false
+        }
+        if (!email.match(/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/)) {
+            errorEmail.innerHTML = 'enter a proper email address'
+            return false
+        }
+        errorEmail.innerHTML = null
+        return true
+    }
+    function validPhoneumber() {
+        const mob = document.getElementById('phonenumber').value
+        if (mob == "") {
+            errorPhonenumber.innerHTML = "enter a phonenumber"
+            return false
+        }
+        if (mob.length < 10 || !mob.match(/^\d*$/)) {
+            errorPhonenumber.innerHTML = "Please Enter the valide phone number"
+            return false
+        }
+        errorPhonenumber.innerHTML = null
+        return true
+    }
+    function validPassowrd() {
+        const psd = document.getElementById('password').value
+        if (psd == "") {
+            errorPassword.innerHTML = "enter a password"
+            return false
+        }
+        if (psd.length < 5) {
+			
+            errorPassword.innerHTML = "password should be more than five characters"
+            return false
+        }
+        errorPassword.innerHTML = null
+        return true
+    }
+
+    
+
+	 
+
+        function check(){
+              let validatearray =[!validateName() , !validEmail() , !validPassowrd() , !validPhoneumber() ]
+
+              return validatearray.every(validation)
+              
+
+        }
+
+  
+
+    function validation() {
+        if (!validateName() || !validEmail() || !validPassowrd() || !validPhoneumber()) {
+            return false
+        }
+        return true
+    }
+</script>

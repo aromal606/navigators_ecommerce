@@ -1,0 +1,181 @@
+<style>
+  .gradient-custom {
+    /* fallback for old browsers */
+    background: rgb(255 255 255);
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to top left, rgb(255, 255, 255), rgba(246, 243, 255, 1));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to top left, rgb(255, 255, 255), rgba(246, 243, 255, 1))
+  }
+</style>
+<div>
+
+  <main class="main">
+
+    
+    <section class="h-100 gradient-custom">
+      <div class="container py-5 h-100">
+        {{#each order}}
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div id="element" class="col-lg-12 col-xl-12">
+            <div class="card" style="border-radius: 10px;">
+              <div class="card-header px-4 py-5">
+                <h5 class="text-muted mb-0">Thanks for your Order 
+                    {{!-- <span style="color: #a8729a;">{{this.orderDetails.Address.fullName}}aromal mohan paroochery house</span>! --}}
+                    </h5>
+                <button id="download" class="btn btn-success rounded-pill" style="float:right;">Download Bill</button>
+              </div>
+              <div>
+                <h1 class='d-flex justify-content-center align-items-center' style="color: #585858;">Order Summary</h1>
+              </div>
+              <div class="card-body p-4">
+                <div class="d-flex justify-content-center align-items-center mb-4">
+                  <p class="lead fw-normal mb-0" style="color: #585858;">Receipt</p>
+                </div>
+
+                <div class="card shadow-0 border mb-4">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center mb-2">Product
+                        Image
+                      </div>
+                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center mb-2">Product
+                        Name
+                      </div>
+                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center mb-2">Price
+                      </div>
+                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center mb-2">Quantity
+                      </div>
+
+                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center mb-2">Payment
+                        Type
+                      </div>
+                       <div class="col-md-2 text-center d-flex justify-content-center align-items-center mb-2">
+                        Status</div>
+                    </div>
+
+
+                    <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                    {{#each this.productList}}
+                    <div class="row mt-2">
+
+                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center ">
+                        <img src="/pro_img/{{this.product.img.[0]}}" class="img-fluid" width="80px"
+                          alt="Phone">
+                      </div>
+
+                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                        <p class="font-weight-normal mb-0">{{this.product.productname}}</p>
+                      </div>
+
+                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                        <p class="font-weight-normal mb-0 ">₹{{this.product.price}}</p>
+                      </div>
+
+                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                        <p class="font-weight-normal mb-0 ">{{this.quantity}}</p>
+                      </div>
+
+                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                        <p class="font-weight-normal mb-0 small">{{../this.orderDetails.paymentMethod}}</p>
+                      </div>
+                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                        <p class="text-muted mb-0 small">{{../this.orderDetails.status}}</p>
+                      </div>
+                    </div>
+                    {{/each}}
+
+                  </div>
+
+                </div>
+
+
+                <div class="d-flex justify-content-between pt-1">
+                  <p class="fw-bold mb-0">Order Details</p>
+                  {{!-- {{#if orderDetails.couponDetails}} --}}
+                  {{!-- <p class=" font-weight-normal mb-0"><span class="font-weight-bold "> Discount Price :  {{orderDetails.couponDetails.Maxoffer}} 20</span>
+                     </p> --}}
+                  
+                  {{!-- {{/if}} --}}
+                </div>
+
+
+                <div class="d-flex justify-content-between">
+                  <p class="font-weight-normal  mb-0">Purchase Date : {{orderDetails.date}}</p>
+
+                </div>
+
+
+
+                <div>
+
+                  <p class="font-weight-normal"><span><strong> Delivery Address:</strong></span>
+                    <br>
+                 {{this.orderDetails.deliveryDetails.name}}
+                    <br>
+                    {{this.orderDetails.deliveryDetails.address}},&nbsp;
+
+                    {{this.orderDetails.deliveryDetails.city}},&nbsp;{{this.orderDetails.deliveryDetails.state}}
+                    <br>pincode&nbsp;
+                    
+                      {{this.orderDetails.deliveryDetails.pincode}},&nbsp;
+
+                     phone&nbsp;{{this.orderDetails.deliveryDetails.phone}},&nbsp;
+
+                  
+
+                  </p>
+                   
+                </div>
+
+                </div>
+                 {{!-- {{#if orderDetails.couponDetails}} --}}
+                <div class="card-footer border-0 "
+                  {{!-- style="background-color: #ffffff; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                
+                  <h5 class="d-flex align-items-center justify-content-end text-white  mb-0">
+                    <span class="h2 mb-0 ms-2" style="color: black;">Total : ₹{{orderDetails.offerAmount}}4999</span><br>
+                    
+                  </h5> --}}
+                  
+                </div>
+               
+               {{!-- {{else}} --}}
+               <div class="card-footer border-0 "
+                  style="background-color: #ffffff; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                  <h5 class="d-flex align-items-center justify-content-end text-white  mb-0">
+                    <span class="h2 mb-0 ms-2" style="color: black;">Total : ₹{{this.orderDetails.totalAmount}}</span>
+                  </h5>
+                </div>
+                {{!-- {{/if}} --}}
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+       {{/each}}
+      </div>
+     
+      <a href="/useraccount" type="button" class="btn btn-info" style="float: right;margin-right:300px ;margin-top: -30px;" >Back to orders</a>
+    </section>
+    
+   
+  </main>
+
+</div>
+<script>
+  let elem = document.querySelector('#element')
+  let btn = document.getElementById('download')
+  btn.addEventListener('click', async () => {
+    btn.style.display = 'none'
+
+    await html2pdf().from(elem).save()
+    btn.style.display = 'block'
+  })
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"
+  integrity="sha512-vNrhFyg0jANLJzCuvgtlfTuPR21gf5Uq1uuSs/EcBfVOz6oAHmjqfyPoB5rc9iWGSnVE41iuQU4jmpXMyhBrsw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>

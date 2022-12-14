@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<!-- belle/checkout.html   11 Nov 2019 12:44:33 GMT -->
+
+<head>
+    <style>
+        :root {
+            --card-line-height: 1.2em;
+            --card-padding: 1em;
+            --card-radius: 0.5em;
+            --color-green: #558309;
+            --color-gray: #e2ebf6;
+            --color-dark-gray: #c4d1e1;
+            --radio-border-width: 2px;
+            --radio-size: 1.5em;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #263238;
+            font-family: "Noto Sans", sans-serif;
+            margin: 0;
+
+        }
+
+        .grid {
+            display: grid;
+            grid-gap: var(--card-padding);
+            margin: 0 auto;
+            max-width: 60em;
+            padding: 0;
+        }
+
+        @media (min-width: 42em) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: var(--card-radius);
+            position: relative;
+        }
+
+        .card:hover {
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .radio {
+            font-size: inherit;
+            margin: 0;
+            position: absolute;
+            right: calc(var(--card-padding) + var(--radio-border-width));
+            top: calc(var(--card-padding) + var(--radio-border-width));
+        }
+
+        @supports (-webkit-appearance: none) or (-moz-appearance: none) {
+            .radio {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background: #fff;
+                border: var(--radio-border-width) solid var(--color-gray);
+                border-radius: 50%;
+                cursor: pointer;
+                height: var(--radio-size);
+                outline: none;
+                transition: background 0.2s ease-out, border-color 0.2s ease-out;
+                width: var(--radio-size);
+            }
+
+            .radio::after {
+                border: var(--radio-border-width) solid #fff;
+                border-top: 0;
+                border-left: 0;
+                content: "";
+                display: block;
+                height: 0.75rem;
+                left: 25%;
+                position: absolute;
+                top: 50%;
+                transform: rotate(45deg) translate(-50%, -50%);
+                width: 0.375rem;
+            }
+
+            .radio:checked {
+                background: var(--color-green);
+                border-color: var(--color-green);
+            }
+
+            .card:hover .radio {
+                border-color: var(--color-dark-gray);
+            }
+
+            .card:hover .radio:checked {
+                border-color: var(--color-green);
+            }
+        }
+
+        .plan-details {
+            border: var(--radio-border-width) solid var(--color-gray);
+            border-radius: var(--card-radius);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            padding: var(--card-padding);
+            transition: border-color 0.2s ease-out;
+        }
+
+        .card:hover .plan-details {
+            border-color: var(--color-dark-gray);
+        }
+
+        .radio:checked~.plan-details {
+            border-color: var(--color-green);
+        }
+
+        .radio:focus~.plan-details {
+            box-shadow: 0 0 0 2px var(--color-dark-gray);
+        }
+
+        .radio:disabled~.plan-details {
+            color: var(--color-dark-gray);
+            cursor: default;
+        }
+
+        .radio:disabled~.plan-details .plan-type {
+            color: var(--color-dark-gray);
+        }
+
+        .card:hover .radio:disabled~.plan-details {
+            border-color: var(--color-gray);
+            box-shadow: none;
+        }
+
+        .card:hover .radio:disabled {
+            border-color: var(--color-gray);
+        }
+
+        .plan-type {
+            color: var(--color-green);
+            font-size: 1.5rem;
+            font-weight: bold;
+            line-height: 1em;
+        }
+
+        .plan-cost {
+            font-size: 2.5rem;
+            font-weight: bold;
+            padding: 0.5rem 0;
+        }
+
+        .slash {
+            font-weight: normal;
+        }
+
+        .plan-cycle {
+            font-size: 2rem;
+            font-variant: none;
+            border-bottom: none;
+            cursor: inherit;
+            text-decoration: none;
+        }
+
+        .hidden-visually {
+            border: 0;
+            clip: rect(0, 0, 0, 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            white-space: nowrap;
+            width: 1px;
+        }
+    </style>
+</head>
+
+
+<body class="page-template belle">
+    <div class="pageWrapper">
+        <!--Search Form Drawer-->
+
+        <!--End Search Form Drawer-->
+        <!--Top Header-->
+
+        <!--End Top Header-->
+        <!--Header-->
+
+        <!--End Header-->
+        <!--Mobile Menu-->
+
+        <!--End Mobile Menu-->
+
+        <!--Body Content-->
+        <div id="page-content">
+            <!--Page Title-->
+            <div class="page section-header text-center">
+                <div class="page-title">
+                    <div class="wrapper">
+                        <h1 class="page-width">Checkout</h1>
+                    </div>
+                </div>
+            </div>
+            <!--End Page Title-->
+
+            <div class="container">
+                <div class="row">
+                    <div class="card mb-2">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-4">
+                            <h5>Discount Codes</h5>
+                            <form action="#" method="" id="couponApply">
+                                <div class="form-group">
+                                    <label for="address_zip">Enter your coupon code if you
+                                        have one.</label>
+                                    <input type="text" name="coupon">
+                                </div>
+                                <div class="actionRow">
+                                    <div class="">
+                                        {{#if couponstatus}}
+
+                                        <P></P>
+                                        <a href="/removecoupon"><input type=""
+                                                class="btn btn-secondary btn--small alert" value="remove coupon"></a>
+                                    </div>
+                                    {{else}}
+                                    <p></p>
+                                    <div style="margin-left: auto;">
+                                        <input type="submit" class="btn btn-secondary btn--small alert"
+                                            value="apply coupon">
+                                    </div>
+                                    {{/if}}
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {{!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                    <div class="customer-box returning-customer">
+                        <h3><i class="icon anm anm-user-al"></i> Returning customer? <a href="#customer-login"
+                                id="customer" class="text-white text-decoration-underline" data-toggle="collapse">Click
+                                here to login</a></h3>
+                        <div id="customer-login" class="collapse customer-content">
+                            <div class="customer-info">
+                                <p class="coupon-text">If you have shopped with us before, please enter your details
+                                    in the boxes below. If you are a new customer, please proceed to the Billing
+                                    &amp; Shipping section.</p>
+                                <form>
+                                    <div class="row">
+                                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                            <label for="exampleInputEmail1">Email address <span
+                                                    class="required-f">*</span></label>
+                                            <input type="email" class="no-margin" id="exampleInputEmail1">
+                                        </div>
+                                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                            <label for="exampleInputPassword1">Password <span
+                                                    class="required-f">*</span></label>
+                                            <input type="password" id="exampleInputPassword1">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-check width-100 margin-20px-bottom">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" value="">
+                                                    Remember me!
+                                                </label>
+                                                <a href="#" class="float-right">Forgot your password?</a>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+
+
+            </div>
+
+            <div class="row billing-fields">
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom">
+                    <div class="create-ac-content bg-light-gray padding-20px-all">
+
+
+                        <fieldset>
+                            <h2 class="login-title mb-3">Billing details</h2>
+
+                            <div class="row">
+                                {{!-- modal starting --}}
+
+                                <button type="button" class="btn btn-primary ml-3" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop">
+                                    click here to Add Address
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="/user_address" method="post" onclick="return check()">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Add
+                                                        Your
+                                                        Address
+                                                    </h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                                            <input type="hidden" id="custId" name="userId"
+                                                                value="{{user._id}}">
+                                                            <label for="input-firstname">Name <span class="required-f">
+                                                                    {{this.name}}</span></label>
+                                                            <input name="firstname" value="" id="input-name" type="text"
+                                                                onkeyup="validateName()">
+                                                            <span id="name" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                                            <label for="input-email">E-Mail <span
+                                                                    class="required-f">*</span></label>
+                                                            <input name="email" value="" id="input-email" type="email"
+                                                                onkeyup="validateEmail()">
+                                                            <span id="email1" class="text-danger"></span>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                                            <label for="input-number">Telephone <span
+                                                                    class="required-f">*</span></label>
+                                                            <input name="telephone" value="" id="input-telephone"
+                                                                type="tel" onkeyup="validatePhonenumber()">
+                                                            <span id="telephone" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                                            <label for="input-address">Address <span
+                                                                    class="required-f">*</span></label>
+                                                            <input name="address_1" value="" id="input-address"
+                                                                type="text" onkeyup="validateAddress()">
+                                                            <span id="address1" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                                            <label for="input-city">City <span
+                                                                    class="required-f">*</span></label>
+                                                            <input name="city" value="" id="input-city" type="text"
+                                                                onkeyup="validateCity()">
+                                                            <span id="city1" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                                            <label for="input-pin">Post Code <span
+                                                                    class="required-f">*</span></label>
+                                                            <input name="postcode" value="" id="input-pin"
+                                                                onkeyup="validatePin()" type="text">
+                                                            <span id="pin" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                                            <label for="input-landmark">Land Mark <span
+                                                                    class="required-f">*</span></label>
+                                                            <input name="landmark" value="" id="input-landmark"
+                                                                onkeyup="validateLandmark()" type="text">
+                                                            <span id="landmark1" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                                            <label for="input-state">State <span
+                                                                    class="required-f">*</span></label>
+                                                            <input name="state" value="" id="input-state" type="text"
+                                                                onkeyup="validateState()">
+                                                            <span id="state1" class="text-danger"></span>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+
+
+
+                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                                            <label for="input-district">district <span
+                                                                    class="required-f">*</span></label>
+                                                            <input name="district" value="" id="input-district"
+                                                                onkeyup="validateDistrict()" type="text">
+                                                            <span id="district1" class="text-danger"></span>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Add</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                {{!-- <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                    <label for="input-firstname">Name <span class="required-f">name:
+                                            {{this.name}}</span></label>
+                                    <input name="firstname" value="" id="input-firstname" type="text">
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                    <label for="input-email">E-Mail <span class="required-f">*</span></label>
+                                    <input name="email" value="" id="input-email" type="email">
+                                </div> --}}
+                                {{!-- <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                    <label for="input-lastname">Last Name <span class="required-f">*</span></label>
+                                    <input name="lastname" value="" id="input-lastname" type="text">
+                                </div> --}}
+                            </div>
+                            <div class="row">
+
+                                {{!-- <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                    <label for="input-telephone">Telephone <span class="required-f">*</span></label>
+                                    <input name="telephone" value="" id="input-telephone" type="tel">
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                    <label for="input-address-1">Address <span class="required-f">*</span></label>
+                                    <input name="address_1" value="" id="input-address-1" type="text">
+                                </div> --}}
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="row">
+
+
+                            </div>
+                            <div class="row">
+
+                                {{!-- <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                    <label for="input-city">City <span class="required-f">*</span></label>
+                                    <input name="city" value="" id="input-city" type="text">
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                    <label for="input-postcode">Post Code <span class="required-f">*</span></label>
+                                    <input name="postcode" value="" id="input-postcode" type="text">
+                                </div> --}}
+                            </div>
+                            <div class="row">
+
+                                {{!-- <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
+                                    <label for="input-landmark">Land Mark <span class="required-f">*</span></label>
+                                    <input name="landmark" value="" id="input-landmark" type="text">
+                                </div> --}}
+
+                            </div>
+
+
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="row">
+                                <div class="form-group form-check col-md-12 col-lg-12 col-xl-12">
+                                    {{!-- <label class="form-check-label padding-15px-left">
+                                        <input type="checkbox" class="form-check-input" value=""><strong>Create
+                                            an account ?</strong>
+                                    </label> --}}
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            {{!-- radio card --}}
+                            {{#each address}}
+
+                            <div id="divid" class="d-flux"
+                                onclick="applyAddress('{{this._id}}','{{this.firstname}}','{{this.address_1}}','{{this.city}}','{{this.district}}','{{this.state}}','{{this.postcode}}','{{this.landmark}}','{{this.email}}','{{this.telephone}}')">
+                                <label class="card">
+                                    <input name="plan" class="radio" type="radio" checked>
+                                    <input type="hidden" id="custId" name="buyerid" value="{{user._id}}">
+
+
+                                    <span class="plan-details" aria-hidden="true">
+                                        <span class="plan-type">{{this.firstname}}</span>
+
+                                        <span>{{this.address_1}}</span>
+
+
+                                        <span>{{this.city}},{{this.district}},{{this.state}},pin:{{this.postcode}}</span>
+
+                                        <span>Landmark:{{this.landmark}}</span>
+                                        <span>gmail:{{this.email}}</span>
+                                        <span>phone:{{this.telephone}}</span>
+                                        <span></span>
+                                        <button class="btn" type="submit"
+                                            onclick="removeAddress('{{this._id}}')">remove</button>
+                                    </span>
+                                </label>
+
+
+                            </div>
+                            {{/each}}
+                        </fieldset>
+
+
+                    </div>
+                </div>
+
+
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+
+
+
+                    <form id="checkout-form">
+                        <input type="hidden" id="custId" name="buyerid" value="{{user._id}}">
+                        <div class="your-order-payment">
+                            <div class="your-order">
+                                <h2 class="order-title mb-4">Your Order</h2>
+
+                                <div class="table-responsive-sm ">
+                                    <table class="bg-white table table-bordered table-hover text-center">
+
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Product Name</th>
+                                                <th>Price</th>
+                                                <th>Size</th>
+                                                <th>Qty</th>
+                                                <th>Subtotal</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {{#each products}}
+                                            <tr>
+
+                                                <td class="text-left">{{product.productname}}</td>
+                                                <td>{{product.price}}</td>
+                                                <td>{{product.size}}</td>
+                                                <td>{{this.quantity}}</td>
+                                                <td>{{this.total}}</td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                        <tfoot class="font-weight-600">
+                                            <tr>
+                                                <td colspan="4" class="text-right">Grand Total </td>
+                                                <td id="totalprice">{{grandtotal}}</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right">Shipping </td>
+                                                <td>$00.00</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="4" class="text-right">Coupon discount </td>
+                                                <td>{{offerAmount}}</td>
+                                            </tr>
+                                            <tr>
+
+                                                <td colspan="4" class="text-right">Final price</td>
+                                                {{#if finalPrice}}
+                                                <td>{{finalPrice}}</td>
+                                                <input name="finalprice" value="{{finalPrice}}">
+                                                {{else}}
+                                                <input hidden name="finalprice" value="{{grandtotal}}">
+
+                                                <td>{{grandtotal}}</td>
+                                                {{/if}}
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+
+
+
+                            <div class="your-payment">
+                                <h2 class="payment-title mb-3">payment method</h2>
+                                <div class="payment-method">
+
+                                    <div class="payment-accordion">
+                                        <div id="accordion" class="payment-section">
+
+
+                                            <div class="card margin-15px-bottom border-radius-none">
+                                                <div class="card-header">
+                                                    <a class="collapsed card-link" data-toggle="collapse"
+                                                        href="#collapseThree"> Pay
+                                                        mode </a>
+
+                                                </div>
+                                                <div id="collapseThree" class="coll" data-parent="#accordion">
+                                                    <div class="card-body">
+
+                                                        {{!-- <a class="collapsed card-link" data-toggle="collapse"
+                                                            href="#collapseThree"> PayPal </a> --}}
+
+
+                                                        <p>Please select your payment mode</p>
+                                                        <input type="radio" id="wallet" name="payment-method"
+                                                            value="wallet">
+                                                        <label for="wallet">Pay Through Wallet</label><br>
+                                                        <input checked type="radio" id="cod" name="payment-method"
+                                                            value="cod">
+                                                        <label for="cod">Cash On Delivery</label><br>
+                                                        <input type="radio" id="online" name="payment-method"
+                                                            value="online">
+                                                        <label for="css">Razorpay</label><br>
+                                                        <input type="radio" id="paypal" name="payment-method"
+                                                            value="paypal">
+                                                        <label for="css">Paypal</label><br>
+
+
+                                                    </div>
+                                                </div>
+                                                {{!-- for user address passing through place order form --}}
+                                                {{#each defaultAddress}}
+                                                <input type="hidden" id="custname" name="buyername"
+                                                    value="{{this.firstname}}">
+                                                <input type="hidden" id="custaddress" name="buyeraddress"
+                                                    value="{{this.address_1}}">
+                                                <input type="hidden" id="custcity" name="buyercity"
+                                                    value="{{this.city}}">
+                                                <input type="hidden" id="custdistrict" name="buyerdistrict"
+                                                    value="{{this.district}}">
+                                                <input type="hidden" id="custstate" name="buyerstate"
+                                                    value="{{this.state}}">
+                                                <input type="hidden" id="custpin" name="buyerpin"
+                                                    value="{{this.postcode}}">
+                                                <input type="hidden" id="custlandmark" name="buyerlandmark"
+                                                    value="{{this.landmark}}">
+                                                <input type="hidden" id="custgmail" name="buyergmail"
+                                                    value="{{this.email}}">
+                                                <input type="hidden" id="custphone" name="buyerphone"
+                                                    value="{{this.telephone}}">
+
+                                                {{/each}}
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="order-button-payment">
+                                        {{#if defaultAddress}}
+                                        <button class="btn" value="Place order" type="submit">Place order</button>
+                                        {{else}}
+                                        <button type="button" class="btn btn-primary ml-3" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop">
+                                            Add Address
+                                        </button>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+        $("#checkout-form").submit((e) => {
+            e.preventDefault()
+            $.ajax({
+                url: '/placeorderconfirm',
+                method: 'post',
+                data: $('#checkout-form').serialize(),
+                success: (response) => {
+                    console.log('---------eeeeeeeeeeeeeeeeeeeeeee----------')
+                    console.log(response)
+                    console.log('---------eeeeeeeeeeeeeeeeeeeeeee----------')
+
+
+
+                    if (response.codSuccess) {
+                        location.href = '/order_success'
+
+                    } else if (response.paypalSuccess) {
+                        paypal(response.orderId)
+                        alert('haii')
+                        console.log('-------121212--------')
+                        console.log(response)
+                        console.log('-------121212--------')
+
+
+                    } else if (response.wallet) {
+                        location.href = '/order_success/?orderId=' + response.orderId
+                    } else if (response.walleterr) {
+                        swal('oops', "insufficient balance", 'error')
+
+                    }
+                    else {
+                        razorpayPayment(response)
+                    }
+
+                }
+            })
+        })
+
+        function razorpayPayment(order) {
+            var options = {
+                "key": "rzp_test_rDyALEYvpGsNTJ", // Enter the Key ID generated from the Dashboard
+                "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "fashion store",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+                "handler": function (response) {
+                    verifyPayment(response, order)
+                },
+                "prefill": {
+                    "name": "Gaurav Kumar",
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9999999999"
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
+        function verifyPayment(payment, order) {
+            $.ajax({
+                url: '/verifyPayment',
+                data: {
+                    payment,
+                    order
+                },
+                method: 'post',
+                success: (response) => {
+                    console.log(response)
+                    if (response.status) {
+                        location.href = '/order_success'
+
+                    } else {
+                        alert('payment failed')
+                    }
+                }
+            })
+        }
+
+
+        function applyAddress(addressId, name, a, b, c, d, e, f, g, h) {
+
+            document.getElementById('custname').value = name;
+            document.getElementById('custaddress').value = a;
+            document.getElementById('custcity').value = b;
+            document.getElementById('custdistrict').value = c;
+            document.getElementById('custstate').value = d;
+            document.getElementById('custpin').value = e;
+            document.getElementById('custlandmark').value = f;
+            document.getElementById('custgmail').value = g;
+            document.getElementById('custphone').value = h;
+
+
+
+
+
+        }
+
+    </script>
+    <script>
+        function paypal(orderId) {
+            alert('function')
+            $.ajax({
+                url: '/p/?orderId=' + orderId,
+
+                method: 'post',
+
+
+                success: (response) => {
+                    alert('qqqqqqqqqqqqqqqqqqq')
+                    location.href = response
+                }
+            })
+
+
+
+        }
+    </script>
+
+    <script>
+        $("#couponApply").submit((e) => {
+            let grandTotal = document.getElementById('totalprice').innerHTML
+
+            e.preventDefault()
+            if (grandTotal > 1000) {
+
+                $.ajax({
+                    url: '/couponApply',
+                    method: 'post',
+                    data: $('#couponApply').serialize(),
+                    success: (response) => {
+
+                        if (response.response.status) {
+                            if (response.response.usedStatus) {
+
+                                swal('Congrats', response.response.msg)
+
+                               setTimeout( location.reload.bind(location),2000)
+                            } else {
+                                swal('Sorry', response.response.msg)
+                            }
+
+                        } 
+                        else {
+                            swal('Oops', response.response.msg)
+
+                        }
+                    }
+                })
+            } else {
+                //alert('oooooooooooo')
+                swal('Sorry', 'purchase 1000 ruppee above to apply coupons', 'error')
+
+            }
+        })
+    </script>
+    <script>
+        let ename = document.getElementById('name')
+        let eemail = document.getElementById('email1')
+        let ephone = document.getElementById('telephone')
+        let eaddress = document.getElementById('address1')
+        let ecity = document.getElementById('city1')
+        let epin = document.getElementById('pin')
+        let elandmark = document.getElementById('landmark1')
+        let estate = document.getElementById('state1')
+        let edistrict = document.getElementById('district1')
+        function validateName() {
+            let name = document.getElementById('input-name').value
+            if (name == "") {
+                ename.innerHTML = "enter your name"
+                return false;
+            }
+            if (!name.match(/^[a-zA-Z ]*$/)) {
+                ename.innerHTML = 'enter a valid name'
+                return false
+            }
+            ename.innerHTML = null
+            return true
+        }
+        function validateEmail() {
+            const email = document.getElementById('input-email').value;
+            if (email == "") {
+                eemail.innerHTML = "enter you email address"
+                return false
+            }
+            if (!email.match(/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/)) {
+                eemail.innerHTML = 'enter a proper email address'
+                return false
+            }
+            eemail.innerHTML = null
+            return true
+        }
+        function validatePhonenumber() {
+            const mob = document.getElementById('input-telephone').value
+            if (mob == "") {
+                ephone.innerHTML = "enter a phonenumber"
+                return false
+            }
+            if (mob.length < 10 || !mob.match(/^\d*$/)) {
+                ephone.innerHTML = "Please Enter the valide phone number"
+                return false
+            }
+            ephone.innerHTML = null
+            return true
+        }
+        function validateAddress() {
+            const address = document.getElementById('input-address').value
+            if (address == "") {
+                eaddress.innerHTML = "enter your address"
+                return false
+            }
+            eaddress.innerHTML = null
+            return true
+        }
+        function validateCity() {
+            const city = document.getElementById('input-city').value
+            if (city == "") {
+                ecity.innerHTML = "enter city name"
+                return false
+            }
+
+            ecity.innerHTML = null
+            return true
+        } function validatePin() {
+            const pin = document.getElementById('input-pin').value;
+            if (pin == "") {
+                epin.innerHTML = "enter pincode"
+                return false
+            }
+            if (pin.match()) {
+                epin.innerHTML = "enter your post code number"
+            }
+
+            epin.innerHTML = null
+            return true
+        }
+        function validateLandmark() {
+            const landmark = document.getElementById('input-landmark').value
+            if (landmark == "") {
+                elandmark.innerHTML = "provide landmark"
+                return false
+            }
+
+            elandmark.innerHTML = null
+            return true
+        } function validateState() {
+            const state = document.getElementById('input-state').value
+            if (state == "") {
+                estate.innerHTML = "provide state "
+                return false
+            }
+
+            estate.innerHTML = null
+            return true
+        }
+        function validateDistrict() {
+            const district = document.getElementById('input-district').value
+            if (district == "") {
+                edistrict.innerHTML = "provide district "
+                return false
+            }
+
+            edistrict.innerHTML = null
+            return true
+        }
+
+
+
+
+
+
+        function check() {
+            let validatearray = [!validateName(), !validateEmail(), !validatePhonenumber(), !validatePin(), !validateLandmark(), !validateState(), !validateDistrict()]
+
+            return validatearray.every(validation)
+
+
+        }
+
+
+
+        function validation() {
+            if (!validateName() || !validateEmail() || !validatePhonenumber() || !validatePin() || !validateLandmark() || !validateState() || !validateDistrict()) {
+                return false
+            }
+            return true
+        }
+
+
+    </script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>
+
+
+    <!-- Including Jquery -->
+    <script src="assets/js/vendor/jquery-3.3.1.min.js"></scrip >
+            <script src="assets/js/vendor/jquery.cookie.js"></s>
+    <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="assets/js/vendor/wow.min.js"></script>
+    <!-- Including Javascript -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/lazysizes.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

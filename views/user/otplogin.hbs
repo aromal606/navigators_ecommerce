@@ -1,0 +1,37 @@
+<div class="page section-header text-center">
+    <div class="page-title">
+        <div class="wrapper">
+            <h1 class="page-width">OTP Login</h1>
+        </div>
+    </div>
+</div>
+<!--End Page Title-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
+            <div class="mb-4">
+                {{!-- user login and signup, forgot password, create account, otp login --}}
+                <form method="post" action="/otpsubmit" id="CustomerLoginForm" accept-charset="UTF-8"
+                    class="contact-form">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="CustomerPhoneNo">Enter Phone Number</label>
+                                <input type="number" name="otpphnno" placeholder="" id="otpphnno" class=""
+                                    autocorrect="off" autocapitalize="off" autofocus="">
+                                <p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">
+                            <input type="submit" class="btn mb-3" value="Send">
+                            <p class="mb-4">{{message}}</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

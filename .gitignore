@@ -1,6 +1,6 @@
 .env
 node_modules
-public/pro_img/
-public/images/logo/
-public/images/product-images/
-public/images/slideshow-banners/
+public/pro_img/*
+public/images/logo/*
+public/images/product-images/*
+public/images/slideshow-banners/*

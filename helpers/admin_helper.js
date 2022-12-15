@@ -9,7 +9,7 @@ require('dotenv').config()
 // var router = express.Router();
 let adminData = {
   email: process.env.ADMINEMAIL,
-  pwd: process.env.ADMINEPASSWORD,
+  pwd: process.env.ADMINPASSWORD,
 }
 
 

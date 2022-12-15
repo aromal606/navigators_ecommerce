@@ -43,6 +43,7 @@ router.get('/', async function (req, res, next) {
 
 
   let banner = await userHelpers.getBanners()
+  console.log(banner,'bannrerrrrrr');
 
   if (req.session.loggedIn) {
   let banner = await userHelpers.getBanners()

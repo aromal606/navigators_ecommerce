@@ -37,6 +37,13 @@ Handlebars.registerHelper('ifEquals', function (value1, value2, options) {
   }
 });
 
+Handlebars.registerHelper('ifNotEquals', function (v1, v2, options) {
+  if (v1 != v2) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
 // --------------------in order management status checking payment approve------------------------------
 
 // ----------------razorpy--------------------------------

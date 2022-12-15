@@ -1005,7 +1005,7 @@ module.exports = {
     getBanners: () => {
         return new Promise(async (resolve, reject) => {
             let bannerData = await db.get().collection(collection.BANNER_COLLECTION).find().toArray()
-            console.log(bannerData);
+          
             resolve(bannerData)
         })
     },
@@ -1018,7 +1018,7 @@ module.exports = {
             console.log(user.wallet + " wallet amount");
             wallet = user.wallet
             if (wallet >= totalprice) {
-
+ 
                 resolve(wallet)
                 console.log('haiiiiiiiiiiiiii');
             }

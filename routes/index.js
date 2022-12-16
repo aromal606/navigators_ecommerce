@@ -469,8 +469,8 @@ router.post('/p', (req, res) => {
       "payment_method": "paypal"
     },
     "redirect_urls": {
-      "return_url": "http://navigator.ml/order_success/?orderId=" + orderId,
-      "cancel_url": "http://navigator.ml/cancel"
+      "return_url": "http://navigators.ml/order_success/?orderId=" + orderId,
+      "cancel_url": "http://navigators.ml/cancel"
     },
     "transactions": [{
       "item_list": {

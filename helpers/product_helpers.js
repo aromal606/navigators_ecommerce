@@ -410,6 +410,10 @@ module.exports = {
     returnPayment: (orderId, userId) => {
         let d = new Date();
         let date=new Date();
+console.log("orderId");     
+console.log(orderId);
+console.log(userId);
+console.log("orderId");
 
         return new Promise(async (resolve, reject) => {
             let orderDetails = await db.get().collection(collection.ORDER_COLLECTION).findOne({ _id: (objectid(orderId)) })
@@ -440,11 +444,10 @@ module.exports = {
                 }
                 )
                 let refundedDate = await db.get().collection(collection.ORDER_COLLECTION).updateOne({ userId: objectid(userId) }, {
-                    $set: { refundCompletedAt: time,refundCompletedAtFullDate: date }
-                },
-                    {
-                        upsert: true
-                    })
+                    $set: { refundCompletedAt: time,
+                        refundCompletedAtFullDate: date }
+                }
+                    )
                 console.log("haiiiiiiiiiiiiiiiiii----------------------------");
                 console.log(retunPayment);
                 console.log(refundedDate);
@@ -453,6 +456,8 @@ module.exports = {
 
 
 
+            }else{
+                console.log("---------------------------error-----------------------");
             }
             resolve()
         })
@@ -474,10 +479,6 @@ module.exports = {
             ).then((data) => {
 
                 resolve(data)
-                console.log('----------------------------------refundOrderStatusUpdate--------------------------');
-                console.log(data);
-                console.log('----------------------------------refundOrderStatusUpdate--------------------------');
-
             }).catch((e) => {
                 console.log(e);
             })

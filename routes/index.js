@@ -469,8 +469,8 @@ router.post('/p', (req, res) => {
       "payment_method": "paypal"
     },
     "redirect_urls": {
-      "return_url": "http://localhost:3000/order_success/?orderId=" + orderId,
-      "cancel_url": "http://localhost:3000/cancel"
+      "return_url": "http://navigator.ml/order_success/?orderId=" + orderId,
+      "cancel_url": "http://navigator.ml/cancel"
     },
     "transactions": [{
       "item_list": {
@@ -603,13 +603,15 @@ router.get('/wallethistory',verifyLogin,async(req,res)=>{
   let user = req.session.user
 
   let userId = ObjectId(req.session.user._id)
-   let getWalletHistoryDataa= await userHelpers.getWalletDetails(userId)
+    let getWalletHistoryDataa= await userHelpers.getWalletDetails(userId)
+  let userdata = await userHelpers.getUserData(userId)
+
   //  dataDetails
    if(getWalletHistoryDataa){
     console.log("getWalletHistoryData");
     console.log(getWalletHistoryDataa);
     console.log("getWalletHistoryData");
-   res.render('user/wallet_history',{userHeader: true,user,getWalletHistoryDataa}) 
+   res.render('user/wallet_history',{userHeader: true,user,getWalletHistoryDataa,userdata}) 
    }else{
   let user = req.session.user
 

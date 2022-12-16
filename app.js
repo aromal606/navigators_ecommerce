@@ -30,22 +30,18 @@ Handlebars.registerHelper('ifCond', function (v1, v2, options) {
   }
   return options.inverse(this);
 });
-
 Handlebars.registerHelper('ifEquals', function (value1, value2, options) {
   if (value1 == value2) {
     return options.fn(this);
   }
 });
-
 Handlebars.registerHelper('ifNotEquals', function (v1, v2, options) {
   if (v1 != v2) {
     return options.fn(this);
   }
   return options.inverse(this);
 });
-
 // --------------------in order management status checking payment approve------------------------------
-
 // ----------------razorpy--------------------------------
 Handlebars.registerHelper('razorpayfn',function(value1,value2,value3,options){
   if(value1=='complete' && value2=='online' && value3=='order canceled' || value1=='complete' && value2=='online' && value3=='return accepted'){
@@ -69,14 +65,13 @@ Handlebars.registerHelper('paypalReFn',function(value1,value2,value3,options){
   }
 });
 // ----------------cod-------------------------------
-
 Handlebars.registerHelper('codfn',function(value1,value2,value3,options){
-  if(value1=='complete' && value2=='cod' && value3=='order canceled' || value1=='complete' && value2=='cod' && value3=='return accepted'){
+  if(value1=='complete' && value2=='cod' && value3=='return accepted'){
     return options.fn(this)
   }
 });
 Handlebars.registerHelper('codReFn',function(value1,value2,value3,options){
-  if(value1==null && value2=='cod' && value3=='order canceled' || value1==null && value2=='cod' && value3=='return accepted'){
+  if(value1==null && value2=='cod' && value3=='return accepted'){
     return options.fn(this)
   }
 });

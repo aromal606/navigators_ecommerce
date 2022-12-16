@@ -3,34 +3,29 @@
 
 <main class="main">
     <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-        <div class="container">
-            <h1 class="page-title">My Wallet<span></h1>
-            <h3>total</h3>
+        <div class="">
+            <h1 class="page-title">My Wallet</h1>
+            <h2 class="" style="text-align: end; padding-right: 90px;">total:{{userdata.wallet}}</h2>
         </div><!-- End .container -->
     </div><!-- End .page-header -->
 
 
     <div class="page-content">
         <div class="container">
-            <table class="table table-wishlist table-mobile">
+            <table class=" table table-mobile">
                 <thead>
                     <tr>
                         <th style="padding: 30px;">orderID</th>
 
-
-
-                        <th style="padding: 30px;">Amount paid</th>
-                        <th style="padding: 30px;">Refunded Amount</th>
-
                         <th style="padding: 30px;">Payment method</th>
-
-                        <th style="padding: 30px;">Order Date</th>
+                        <th style="padding: 30px;width: 135px;">Order Date</th>
+                        <th style="padding: 30px;">debit amount</th>
+                        <th style="padding: 30px;">order status</th>
+                        <th style="padding: 30px;">refund status</th>
+                        <th style="padding: 30px;">credit Amount</th>
                         <th style="padding: 30px;">Refunded Date</th>
-
-
                     </tr>
                 </thead>
-
                 <tbody style="padding:;">
                     {{#each getWalletHistoryDataa}}
                     {{!-- {{#each getWalletHistoryData}} --}}
@@ -40,23 +35,18 @@
                             <div class="product">
                                 <h3 class="product-title">
 
-                                    <a href="/product-view/{{this.products._id}}34535">{{this._id}}qqqqqqqq</a>
+                                    <a href="/product-view/{{this.products._id}}34535">{{this._id}}</a>
                                 </h3> <!-- End .product-title -->
                             </div>
                             <!-- End .product -->
-
                         </td>
-
-
-
-                        <td class="price-col text-danger" style="padding: 30px;">₹{{this.totalAmount}}</td>
-                        <td class="price-col text-success" style="padding: 30px;">₹{{this.totalAmount}}</td>
-
                         <td class="price-col" style="padding: 30px;">{{this.paymentMethod}}</td>
-
                         <td class="action-col" style="padding: 30px;">{{this.date}}</td>
+                        <td class="price-col text-danger" style="padding: 30px;">₹{{this.totalAmount}}</td>
+                        <td class="action-col" style="padding: 30px;">{{this.status}}</td>
+                        <td class="action-col" style="padding: 30px;">{{this.refund}}</td>
+                        <td class="price-col text-success" style="padding: 30px;">₹{{this.totalAmount}}</td>
                         <td class="action-col" style="padding: 30px;">{{this.refundCompletedAt}}</td>
-
                     </tr>
                     {{/each}}
                     {{!-- {{/each}} --}}

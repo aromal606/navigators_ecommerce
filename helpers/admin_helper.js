@@ -281,7 +281,7 @@ resolve(obj)
   ]).toArray().then((details)=>{
     
     resolve(details)
-    console.log(details);
+    
   })
   }).catch((error) => {
         resolve(error)

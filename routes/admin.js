@@ -104,14 +104,14 @@ router.get('/adminpanel',verifyAdminLogin,async function(req, res, next) {
   let totalSalesGraph=await graphHelper.getTotalSalesGraph()
   let todayOrderCount= await graphHelper.getTotalsaleCount()
   let monthlYTotalSale=await graphHelper.getMonthlyTotalSale()
-  console.log("dailySale");
-  
-  console.log("dailySale");
+  console.log("todayOrderCount");
   console.log(todayOrderCount);
+  console.log("todayOrderCount");
+  console.log("monthSales");
   console.log(monthlYTotalSale);
   console.log("monthSales");
   console.log("dailySale");
-  if(totalSalesGraph && todayOrderCount && monthlYTotalSale){
+  if(totalSalesGraph || todayOrderCount || monthlYTotalSale){
     let {yearlySale,monthSales,dailySale}=totalSalesGraph
 console.log('haiiiiii');
     res.render('admin/adminpanel',{yearlySale,monthSales,dailySale,admin:true,todayOrderCount,monthlYTotalSale});
@@ -217,7 +217,7 @@ router.get('/deleteproduct/:id',async(req,res)=>{
   let productId=req.params.id
 productHelpers.deleteProduct(req.params.id)
 
- res.redirect('/admin/productmanagement')
+ res.redirect('/admin/productmanagement/?page=1')
 
 
 }) 
@@ -431,11 +431,12 @@ router.get('/return-payment/:orderId/:userId',async(req,res)=>{
   userId=req.params.userId
   console.log(',.,...................vvvvvvvvvvvvvvv  ...,,,,,,,,,,,,,,,,,,,,,,,,,,,');
   console.log(orderId,"orderId");
-  console.log(userId);
+  console.log(userId,"userId");
   console.log(',.,...................vvvvvvvvvvvvvvv  ...,,,,,,,,,,,,,,,,,,,,,,,,,,,');
 
   let orderStatus=await productHelpers.refundOrderStatusUpdate(orderId,userId).then(response)
   console.log("-------------------------refund completed------------------------------");
+  console.log("-------------------------entering return payment------------------------------");
   let PaymentMethod=await productHelpers.returnPayment(orderId,userId)
   res.redirect('/admin/admin_ordermanage')
 

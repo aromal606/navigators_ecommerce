@@ -89,12 +89,12 @@ module.exports = {
 let date = new Date().toISOString().slice(0, 10)
         return new Promise(async (resolve, reject) => {
             console.log(date);
-            let check = await db.get().collection(collection.ORDER_COLLECTION).findOne({ date: date })
+            let check = await db.get().collection(collection.ORDER_COLLECTION).findOne()
             if (check) {
 
                 let dailySaleCount = await db.get().collection(collection.ORDER_COLLECTION).aggregate([{
                     $match: {
-                        date: date, status: { $nin: ['cancelled', 'pending'] }
+                        status: { $nin: ['order canceled', 'pending'] }
                     }
                 },
                 {
@@ -113,7 +113,7 @@ let date = new Date().toISOString().slice(0, 10)
 
     },
     getMonthlyTotalSale: () => {
-        
+       
         let date = new Date().toISOString().slice(5, 7)
         console.log(date, '----------------------------');
         return new Promise(async (resolve, reject) => {
@@ -122,23 +122,36 @@ let date = new Date().toISOString().slice(0, 10)
             if (checkcollection) {
                 
                 let check = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                    {
+                        $match:{status:{$nin:['return accepted','order canceled']}}
+                    },
                     
                     {
                         $group: {
                             _id: '$month',
                             total: { '$sum': '$totalAmount' }
                         }
-                    },{
+                    },
+                    {
                         $sort: {
                             _id: -1,
                         }
+                    },{
+                        $limit:1
                     }
                     
-                ]).limit (1).toArray()
-                resolve(check[0].total)
-                console.log("-------kkkkkkkkkkkkkkkkkkkk------");
+                ]).toArray()
+
+                 if(check==""){
+                resolve()
+                    }else{
+                     resolve(check[0].total)
+                 }
+
                 // console.log(check[0].total);
-            }else{
+                resolve()
+                // console.log(check[0].total);
+            }else{ 
                 console.log("------yyyyyyyyyyyyyyyyyyyyyyy-------");
 
                 resolve()

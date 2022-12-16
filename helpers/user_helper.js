@@ -60,18 +60,18 @@ module.exports = {
 
                     if (status) {
                         if (user.status) {
-                            // console.log("login success");
+                            // //console.log("login success");
                             response.user = user
                             response.status = true
                             resolve(response)
                         } else {
 
                             response.message = 'Account Blocked'
-                            console.log("login failed");
+                            //console.log("login failed");
                             resolve(response)
                         }
                     } else {
-                        //  console.log("login failed");
+                        //  //console.log("login failed");
                         response.message = 'Incorrect Password'
                         response.status = false
                         resolve(response)
@@ -79,7 +79,7 @@ module.exports = {
                 })
             }
             else {
-                //  console.log("login failed no matching data");
+                //  //console.log("login failed no matching data");
                 response.message = 'Mail not found'
                 response.status = false
                 resolve(response)
@@ -88,35 +88,35 @@ module.exports = {
 
     },
     doLoginOtp: (userData) => {
-        console.log("userData");
-        console.log(userData);
-        console.log("userData");
+        //console.log("userData");
+        //console.log(userData);
+        //console.log("userData");
         return new Promise(async (resolve, reject) => {
             let loginStatus = false
             let response = {}
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ mobno: userData })
 
-            console.log("user");
-            console.log(user);
-            console.log("user");
+            //console.log("user");
+            //console.log(user);
+            //console.log("user");
             if (user) {
-                console.log("-------------------user finded------------------");
+                //console.log("-------------------user finded------------------");
 
                 if (user.status) {
 
-                    console.log("--------login success status true---------");
+                    //console.log("--------login success status true---------");
                     response.user = user
                     response.status = true
                     resolve(response)
                 } else {
-                    console.log("--------login failed status false---------");
+                    //console.log("--------login failed status false---------");
 
                     response.message = 'Account Blocked'
-                    console.log("login failed");
+                    //console.log("login failed");
                     resolve(response)
                 }
             } else {
-                 console.log("----------login failed wrong number-----------------");
+                 //console.log("----------login failed wrong number-----------------");
                 response.message = 'wrong number'
                 response.status = false
                 resolve(response)
@@ -137,10 +137,10 @@ module.exports = {
     },
     userStatusForOtp: (number) => {
         let otpmsg = {}
-        console.log(number, "-------------------------------------------------");
+        //console.log(number, "-------------------------------------------------");
         return new Promise((res, rej) => {
             db.get().collection(collection.USER_COLLECTION).findOne({ mobno: number }).then((response) => {
-                console.log(response);
+                //console.log(response);
                 if (response) {
 
                     if (response.status) {
@@ -159,9 +159,9 @@ module.exports = {
 
                     res(otpmsg)
                 }
-                console.log("-----------------");
-                console.log(otpmsg);
-                console.log("---------------");
+                //console.log("-----------------");
+                //console.log(otpmsg);
+                //console.log("---------------");
             })
         })
     },
@@ -177,15 +177,15 @@ module.exports = {
         return new Promise(async (res, rej) => {
             let userCart = await db.get().collection(collection.CART_COLLECTON).findOne({ user: objectId(userId) })
 
-            // console.log('userCart')
-            // // console.log(userCart)
-            // // console.log(productId)
-            // console.log('productId')
+            // //console.log('userCart')
+            // // //console.log(userCart)
+            // // //console.log(productId)
+            // //console.log('productId')
 
             if (userCart) {
 
                 let proExist = userCart.products.findIndex(products => products.item == productId)
-                console.log(proExist);
+                //console.log(proExist);
 
                 if (proExist != -1) {
                     db.get().collection(collection.CART_COLLECTON)
@@ -209,7 +209,7 @@ module.exports = {
 
                             }
                         ).then((response) => {
-                            console.log(response, '---------------------------------------------');
+                            //console.log(response, '---------------------------------------------');
                             res()
                         })
                 }
@@ -338,14 +338,14 @@ module.exports = {
                         }
                     }
                 ]).toArray();
-                console.log('===============cartItems==================');
-                console.log(cartItems);
-                console.log('===============cartItems==================');
+                //console.log('===============cartItems==================');
+                //console.log(cartItems);
+                //console.log('===============cartItems==================');
 
                 resolve(cartItems);
             } else {
                 resolve(cart)
-                console.log('----------haiiiiiiiii-----------');
+                //console.log('----------haiiiiiiiii-----------');
             }
         });
     },
@@ -382,12 +382,12 @@ module.exports = {
 
 
     changeProductQuantity: ({ cart, product, count, quantity, stockCount }) => {
-        // console.log('---------------qqqqqq-------------------------')
-        // console.log(count)
-        // console.log(quantity)
-        // console.log(stockCount)
-        // console.log(product);
-        // console.log('---------------qqqqqq-------------------------')
+        // //console.log('---------------qqqqqq-------------------------')
+        // //console.log(count)
+        // //console.log(quantity)
+        // //console.log(stockCount)
+        // //console.log(product);
+        // //console.log('---------------qqqqqq-------------------------')
 
         let response = {}
 
@@ -420,7 +420,7 @@ module.exports = {
                                 resolve({ status: true })
                                 // resolve()
                             }).catch((e) => {
-                                console.log('---------------------', e)
+                                //console.log('---------------------', e)
                                 reject()
                             })
                     }
@@ -433,7 +433,7 @@ module.exports = {
                             resolve({ status: true })
                             // resolve()
                         }).catch((e) => {
-                            console.log('---------------------', e)
+                            //console.log('---------------------', e)
                             reject()
                         })
 
@@ -442,15 +442,15 @@ module.exports = {
         })
     },
     removeCartItem: (data) => {
-        console.log(data.cartid);
-        console.log(data.proid);
+        //console.log(data.cartid);
+        //console.log(data.proid);
         return new Promise((resolve, reject) => {
             db.get().collection(collection.CART_COLLECTON).updateOne({ _id: objectId(data.cartid) },
                 {
                     $pull: { products: { item: objectId(data.proid) } }
                 }).then((response) => {
                     resolve(response)
-                    console.log('..........', response, '........');
+                    //console.log('..........', response, '........');
                 })
         })
     },
@@ -458,7 +458,7 @@ module.exports = {
     getGrandTotal: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cart = await db.get().collection(collection.CART_COLLECTON).find({ user: objectId(userId) }).toArray();
-            console.log(cart, 'cartyyyy');
+            //console.log(cart, 'cartyyyy');
             if (cart.length != 0) {
                 let totalAmount = await db.get().collection(collection.CART_COLLECTON).aggregate([
                     {
@@ -520,16 +520,16 @@ module.exports = {
                         }
                     }
                 ]).toArray();
-                console.log('*********total-amount');
-                console.log(totalAmount);
+                //console.log('*********total-amount');
+                //console.log(totalAmount);
 
-                console.log('*********total-amount');
+                //console.log('*********total-amount');
                 resolve(totalAmount[0].total);
 
             } else {
                 resolve(cart);
             }
-            //console.log(cart);
+            ////console.log(cart);
         });
     },
 
@@ -551,7 +551,7 @@ module.exports = {
         let yearofbusiness = year
         return new Promise((resolve, reject) => {
 
-            console.log(order, '------------------------------------aaaaaassssssssssssssddddddddddddddd---------');
+            //console.log(order, '------------------------------------aaaaaassssssssssssssddddddddddddddd---------');
             //total.grandTotal = parseInt(total[0].grandTotal)
 
             let status = order['payment-method'] === 'cod' ? 'placed' : 'pending'
@@ -597,8 +597,8 @@ module.exports = {
                 ]).toArray().then((details) => {
                     response.details = details
                     resolve(response)
-                    console.log("------cod response---------");
-                    console.log(response);
+                    //console.log("------cod response---------");
+                    //console.log(response);
                 })
             })
         })
@@ -618,10 +618,10 @@ module.exports = {
 
         let proQty = parseInt(qty)
         proQty = -Math.abs(qty)
-        console.log("-------------stock decrement--------------");
-        console.log(proQty);
-        console.log(qty);
-        console.log("-------------stock decrement---------------");
+        //console.log("-------------stock decrement--------------");
+        //console.log(proQty);
+        //console.log(qty);
+        //console.log("-------------stock decrement---------------");
 
         return new Promise((resolve, reject) => {
             db.get().collection(collection.PRODUCT_COLLECTION).updateOne({ _id: proId }, {
@@ -656,7 +656,7 @@ module.exports = {
 
 
     getUserOrders: (userId) => {
-        console.log(userId);
+        //console.log(userId);
         userId = objectId(userId)
         return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION).aggregate([{
@@ -744,10 +744,10 @@ module.exports = {
 
     generateRazorpay: (orderId, finalPrice) => {
 
-        console.log("---------55555----------");
-        console.log(orderId, finalPrice);
-        console.log("--------555555-------");
-        console.log("orderID:", orderId);
+        //console.log("---------55555----------");
+        //console.log(orderId, finalPrice);
+        //console.log("--------555555-------");
+        //console.log("orderID:", orderId);
         return new Promise((resolve, reject) => {
             let options = {
                 amount: finalPrice * 100,  // amount in the smallest currency unit
@@ -756,10 +756,10 @@ module.exports = {
             };
             instance.orders.create(options, function (err, order) {
                 if (err) {
-                    console.log(err);
+                    //console.log(err);
                 } else {
                     resolve(order)
-                    console.log("new order:", order);
+                    //console.log("new order:", order);
                 }
             });
 
@@ -780,7 +780,7 @@ module.exports = {
             } else {
                 reject()
             }
-            console.log(hmac.digest('hex'));
+            //console.log(hmac.digest('hex'));
         })
     },
     changePaymentStatus: (orderId) => {
@@ -805,7 +805,7 @@ module.exports = {
     //add address
     addAddress: (data) => {
         data.userId = objectId(data.userId)
-        console.log(data, '---------------------------2222')
+        //console.log(data, '---------------------------2222')
         return new Promise(async (resolve, reject) => {
             await db.get().collection(collection.ADDRESS_COLLECTION).insertOne(data)
             resolve(data)
@@ -844,9 +844,9 @@ module.exports = {
                     }
                 }).then((data) => {
                     resolve(data)
-                    console.log(data)
+                    //console.log(data)
                 }).catch((error) => {
-                    console.log(error);
+                    //console.log(error);
                 })
         })
     },
@@ -867,9 +867,9 @@ module.exports = {
                     }
                 }).then((data) => {
                     resolve(data)
-                    console.log(data)
+                    //console.log(data)
                 }).catch((error) => {
-                    console.log(error);
+                    //console.log(error);
                 })
 
         })
@@ -877,7 +877,7 @@ module.exports = {
 
     // --------------------apply coupon function-----------------
     couponApplyFunction: (userId, data, grandTotal) => {
-        console.log(grandTotal, '------------------grandTotal-------------');
+        //console.log(grandTotal, '------------------grandTotal-------------');
         let d = new Date()
         let month = '' + (d.getMonth() + 1)
         let day = '' + d.getDate()
@@ -902,10 +902,10 @@ module.exports = {
                             $and: [{ userId: objectId(userId) },
                             { coupon: { $in: [objectId(couponObject._id)] } }]
                         })
-                    console.log("---------0000000-------------");
-                    console.log(couponObject._id, userId);
-                    console.log(couponUsed);
-                    console.log("---------0000000-------------");
+                    //console.log("---------0000000-------------");
+                    //console.log(couponObject._id, userId);
+                    //console.log(couponUsed);
+                    //console.log("---------0000000-------------");
 
                     if (couponUsed) {
                         couponObj.status = false
@@ -921,25 +921,25 @@ module.exports = {
                         couponObject.Offer_Percentage = parseInt(couponObject.Offer_Percentage)                        
                         couponObject.max_amount = parseInt(couponObject.max_amount)
                         couponObj.discountedAmount = grandTotal * (couponObject.Offer_Percentage / 100)
-                        console.log('------------ffy----------------');                       
-                        console.log(couponObject.max_amount);
-                        console.log(couponObj.discountedAmount);                    
-                        console.log('------------ffy----------------');
+                        //console.log('------------ffy----------------');                       
+                        //console.log(couponObject.max_amount);
+                        //console.log(couponObj.discountedAmount);                    
+                        //console.log('------------ffy----------------');
                         if (couponObj.discountedAmount >= couponObject.max_amount) {
 
                             couponObj.discountedAmount = couponObject.max_amount
                         }
-                        console.log('------------ffy----------------');                       
-                        console.log(couponObject.max_amount);
-                        console.log(couponObj.discountedAmount);                    
-                        console.log('------------ffy----------------');
+                        //console.log('------------ffy----------------');                       
+                        //console.log(couponObject.max_amount);
+                        //console.log(couponObj.discountedAmount);                    
+                        //console.log('------------ffy----------------');
                         couponObj.finalGrandTotal = grandTotal - couponObj.discountedAmount
                         resolve(couponObj)
                     }
                 } else {
                     couponObj.status = false
                     couponObj.msg = "sorry coupon expired"
-                    console.log(couponObj);
+                    //console.log(couponObj);
 
                     resolve(couponObj)
                 }
@@ -954,7 +954,7 @@ module.exports = {
         })
     },
     removeUserCoupon: (userId) => {
-        console.log("--------------11----------------");
+        //console.log("--------------11----------------");
         return new Promise(async (resolve, reject) => {
             await db.get().collection(collection.USER_COLLECTION).updateOne({ _id: userId }, { $set: { coupon: null } }).then((data) => {
                 resolve(data)
@@ -964,7 +964,7 @@ module.exports = {
         })
     },
     couponRemoveInUser: (userId) => {
-        console.log(userId);
+        //console.log(userId);
         return new Promise(async (resolve, reject) => {
 
             let couponremoving = await db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(userId) }, {
@@ -972,9 +972,9 @@ module.exports = {
                     coupon: null
                 }
             })
-            // console.log("couponremoving------------------------");
-            // console.log(couponremoving);
-            // console.log("couponremoving------------------------");
+            // //console.log("couponremoving------------------------");
+            // //console.log(couponremoving);
+            // //console.log("couponremoving------------------------");
             resolve()
         })
     },
@@ -984,7 +984,7 @@ module.exports = {
             await db.get().collection(collection.ADDRESS_COLLECTION).deleteOne({ _id: addressId }).then((response) => {
                 resolve(response)
             }).catch((e) => {
-                console.log(e);
+                //console.log(e);
             })
         })
     },
@@ -998,7 +998,7 @@ module.exports = {
                     }
                 }, { upsert: true })
             resolve(result)
-            console.log(result, 'upsert result');
+            //console.log(result, 'upsert result');
         })
     },
     //-------------------------------get banner------------------------------
@@ -1011,43 +1011,43 @@ module.exports = {
     },
     //--------------------------------------------------------wallet amount--------------------------------------
     walletAmountCheck: (userId, totalprice) => {
-        console.log(userId);
+        //console.log(userId);
         userId = userId
         return new Promise(async (resolve, reject) => {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) })
-            console.log(user.wallet + " wallet amount");
+            //console.log(user.wallet + " wallet amount");
             wallet = user.wallet
             if (wallet >= totalprice) {
  
                 resolve(wallet)
-                console.log('haiiiiiiiiiiiiii');
+                //console.log('haiiiiiiiiiiiiii');
             }
             else {
                 resolve(null)
-                console.log('oooooooooooooooooo');
+                //console.log('oooooooooooooooooo');
             }
         })
     },
     //-------------------------------------------------
     WalletAmountReduce: (userId, totlAmount) => {
-        console.log('---------------wallet reduce-----------------');
-        console.log(userId);
-        console.log(totlAmount);
-        console.log('---------------wallet reduce-----------------');
+        //console.log('---------------wallet reduce-----------------');
+        //console.log(userId);
+        //console.log(totlAmount);
+        //console.log('---------------wallet reduce-----------------');
         return new Promise(async (resolve, reject) => {
 
             let retunPayment = await db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(userId) }, {
                 $inc: { "wallet": -totlAmount }
             })
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) })
-            console.log(user.wallet + "new wallet amount");
+            //console.log(user.wallet + "new wallet amount");
             resolve()
         })
     },
     // --------------------------------------------------search products----------------------------------
     getSearchProducts: (searchProducts) => {
-        console.log('------------------------------------');
-        console.log(searchProducts);
+        //console.log('------------------------------------');
+        //console.log(searchProducts);
         return new Promise(async (resolve, reject) => {
             try {
                 let searchedItem = await db.get().collection(collection.PRODUCT_COLLECTION).find({ productname: { '$regex': searchProducts, $options: 'i' } }).limit(10).toArray()
@@ -1114,7 +1114,7 @@ module.exports = {
                 resolve(product)
             } else {
                 resolve(true)
-                console.log("-------------getFilterProducts---------------");
+                //console.log("-------------getFilterProducts---------------");
             }
         })
     },
@@ -1139,9 +1139,9 @@ module.exports = {
                     }
                 }
             ]).toArray().then((details) => {
-                console.log("details");
-                console.log(details);
-                console.log("details");
+                //console.log("details");
+                //console.log(details);
+                //console.log("details");
 
                 // response.details = details
                 resolve(details)
@@ -1161,9 +1161,9 @@ module.exports = {
                 },
             ]).toArray()
             resolve(data)
-            console.log("data");
-            console.log(data);
-            console.log("data");
+            //console.log("data");
+            //console.log(data);
+            //console.log("data");
             }else{
                 resolve()
             }
@@ -1207,9 +1207,9 @@ module.exports = {
                 }
                 ]).toArray()
             resolve(dataDetails)
-            // console.log('---------------------datadetails in userHealper-------------------');
-            // console.log(dataDetails);
-            // console.log('----------------------datadetails userHealper------------------');
+            // //console.log('---------------------datadetails in userHealper-------------------');
+            // //console.log(dataDetails);
+            // //console.log('----------------------datadetails userHealper------------------');
         }) 
     }
 

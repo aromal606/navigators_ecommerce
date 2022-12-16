@@ -443,11 +443,15 @@ console.log("orderId");
                     $inc: { wallet: refundAmount }
                 }
                 )
-                let refundedDate = await db.get().collection(collection.ORDER_COLLECTION).updateOne({ userId: objectid(userId) }, {
-                    $set: { refundCompletedAt: time,
-                        refundCompletedAtFullDate: date }
-                }
-                    )
+                let refundedDate = await db.get().collection(collection.ORDER_COLLECTION).updateOne({ userId: objectid(userId),_id:objectid(orderId) }, {
+                   
+                $set: {
+                         refundCompletedAt: time,
+                         refundCompletedAtFullDate: date
+                      
+                         }
+                },
+                )
                 console.log("haiiiiiiiiiiiiiiiiii----------------------------");
                 console.log(retunPayment);
                 console.log(refundedDate);

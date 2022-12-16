@@ -1161,9 +1161,9 @@ module.exports = {
                 },
             ]).toArray()
             resolve(data)
-            //console.log("data");
-            //console.log(data);
-            //console.log("data");
+            console.log("------------------getWalletDetails data------------");
+            console.log(data);
+            console.log("-------------------getWalletDetails data-----------");
             }else{
                 resolve()
             }

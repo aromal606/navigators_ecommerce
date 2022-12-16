@@ -615,7 +615,7 @@ router.get('/wallethistory',verifyLogin,async(req,res)=>{
    }else{
   let user = req.session.user
 
-   res.render('user/wallet_history', {userHeader: true,user}) 
+   res.render('user/wallet_history', {userHeader: true,user,userdata}) 
 
    }
  

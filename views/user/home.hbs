@@ -1,6 +1,3 @@
-
-
-
 <!--End Header-->
 <!--Mobile Menu-->
 <div class="mobile-nav-wrapper" role="navigation">
@@ -180,22 +177,22 @@
 <div id="page-content">
     <!--Home slider-->
     {{!------------------------- corasol---------------------- --}}
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-    {{!-- <div class="carousel-inner">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        {{!-- <div class="carousel-inner">
 
-        {{#each banner}}
-        <div style="height: 500px;" class="carousel-item active">
-            <img src="/banners/{{this.img.[0]}}" class="d-block w-100" alt="...">
-             <div class="carousel-caption d-none d-md-block">
-                <h2>{{this.bannercontent}}</h2>
+            {{#each banner}}
+            <div style="height: 500px;" class="carousel-item active">
+                <img src="/banners/{{this.img.[0]}}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>{{this.bannercontent}}</h2>
 
+                </div>
             </div>
-        </div>
-        {{/each}}
-     
-    </div> --}}
+            {{/each}}
 
-<div class="carousel-inner" style="height: 400px;">
+        </div> --}}
+
+        <div class="carousel-inner" style="height: 400px;">
 
             <div class="carousel-item active">
                 <img class="d-block w-100" src="/banners/{{banner.[0].img}}" alt="First slide">
@@ -208,11 +205,11 @@
             {{#ifNotEquals this.banner.[0].bannercontent this.bannercontent}}
             <div class="carousel-item">
                 <img class="d-block w-100" src="/banners/{{this.img}}" alt="Second slide">
-             <div class="carousel-caption d-none d-md-block">
+                <div class="carousel-caption d-none d-md-block">
                     <h5 class="text-light">{{this.bannercontent}}</h5>
                 </div>
             </div>
-            {{/ifNotEquals}} 
+            {{/ifNotEquals}}
 
             {{/each}}
 
@@ -222,16 +219,18 @@
 
 
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div> 
-{{!-- -----------------------corasol-------------------------- --}}
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    {{!-- -----------------------corasol-------------------------- --}}
     <!--End Home slider-->
 
     <!--Image Banners-->
@@ -243,7 +242,7 @@
                         <div class="section-header text-center">
                             <h2 class="h2">SHOP BY Category</h2>
                             <p>Shop the Nicest Deals on Best Prices in all category</p>
-                         
+
                         </div>
 
                     </div>
@@ -260,6 +259,13 @@
                                 </div>
                             </a>
                         </div>
+                        <div class="inner topright" style="margin-top: 45px;">
+                                    <a href="#">
+                                        <img data-src="\images\pexels-bruno-salvadori-2313192.jpg"
+                                            src="\images\pexels-bruno-salvadori-2313192.jpg" alt="Heeled Boots"
+                                            title="Heeled Boots" class="blur-up lazyload" />
+                                    </a>
+                                </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-6 image-banner-2">
                         <div class="row">
@@ -274,16 +280,51 @@
                                         </div>
                                     </a>
                                 </div>
+                                <div class="inner topright" style="margin-top: 45px;">
+                                    <a href="#">
+                                        <img data-src="\images\pexels-bruno-salvadori-2313192.jpg"
+                                            src="\images\pexels-bruno-salvadori-2313192.jpg" alt="Heeled Boots"
+                                            title="Heeled Boots" class="blur-up lazyload" />
+                                        {{!-- <div class="ttl">
+                                            Every Little Things <h5>Shop Cosmetics</h5>
+                                        </div> --}}
+                                    </a>
+                                </div><div class="inner topright" style="margin-top: 4px;">
+                                    <a href="#">
+                                        <img data-src="\images\pexels-liza-summer-6347892.jpg"
+                                            src="\images\pexels-liza-summer-6347892.jpg" alt="Heeled Boots"
+                                            title="Heeled Boots" class="blur-up lazyload" />
+                                    </a>
+                                </div>
                             </div>
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <div class="inner btmleft">
+                                <div class="inner btmleft" style="height: ;">
                                     <a href="#">
-                                        <img data-src="\images\pexels-sebastiaan-stam-1311590.jpg"
+                                        <img data-src="\images\pexels-sebastiaan-stam-1311590.jpg" style="height: 269px;"
                                             src="\images\pexels-sebastiaan-stam-1311590.jpg" alt="Caps" title="Caps"
                                             class="blur-up lazyload" />
                                         <div class="ttl">
                                             Shop Cool <h5>Printed T shirts </h5>
                                         </div>
+                                    </a>
+                                </div>
+                                <div class="inner topright" style="margin-top: 75px;">
+                                    <a href="#">
+                                        <img data-src="\images\pexels-ron-lach-10397680.jpg"
+                                            src="\images\pexels-ron-lach-10397680.jpg" alt="Heeled Boots"
+                                            title="Heeled Boots" class="blur-up lazyload" />
+                                        {{!-- <div class="ttl">
+                                            Every Little Things <h5>Shop Cosmetics</h5>
+                                        </div> --}}
+                                    </a>
+                                </div><div class="inner topright" style="margin-top: 75px;">
+                                    <a href="#">
+                                        <img data-src="\images\pexels-ron-lach-10397680.jpg"
+                                            src="\images\pexels-ron-lach-10397680.jpg" alt="Heeled Boots"
+                                            title="Heeled Boots" class="blur-up lazyload" />
+                                        {{!-- <div class="ttl">
+                                            Every Little Things <h5>Shop Cosmetics</h5>
+                                        </div> --}}
                                     </a>
                                 </div>
                             </div>
@@ -306,47 +347,12 @@
                 </div>
                 <div class="row img-grid-banner2">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-3 d-flex">
-                        <div class="inner topleft">
-                            <a href="#">
-                                <img data-src="\images\pexels-tp-dai-3399995.jpg"
-                                    src="\images\pexels-tp-dai-3399995.jpg" alt="Shop Jewelry" title="Shop Jewelry"
-                                    class="blur-up lazyload" />
-                                {{!-- <div class="ttl">
-                                    All the Shiniest <h5>Shop Jewelry</h5>
-                                </div> --}}
-                            </a>
-                            <a href="#">
-                                <img data-src="\images\pexels-bruno-salvadori-2313192.jpg"
-                                    src="\images\pexels-bruno-salvadori-2313192.jpg" alt="Heeled Boots"
-                                    title="Heeled Boots" class="blur-up lazyload" />
-                                {{!-- <div class="ttl">
-                                    Every Little Things <h5>Shop Cosmetics</h5>
-                                </div> --}}
-                            </a>
-                        </div>
+                       
 
-                        <div class="inner topright">
-                            <a href="#">
-                                <img data-src="\images\pexels-ron-lach-10397680.jpg"
-                                    src="\images\pexels-ron-lach-10397680.jpg" alt="Heeled Boots" title="Heeled Boots"
-                                    class="blur-up lazyload" />
-                                {{!-- <div class="ttl">
-                                    Every Little Things <h5>Shop Cosmetics</h5>
-                                </div> --}}
-                            </a>
-                        </div>
+                        
                     </div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-6 image-banner-2">
-                        <div class="inner topleft">
-                            <a href="#">
-                                <img data-src="/images/collection/home11-grid-sm-banner7.jpg"
-                                    src="/images/collection/home11-grid-sm-banner7.jpg" alt="Caps" title="Caps"
-                                    class="blur-up lazyload" />
-                                <div class="ttl">
-                                    Elevate Every Look <h5>Shop Men's Clothing</h5>
-                                </div>
-                            </a>
-                        </div>
+                        
                     </div>
                 </div>
 
@@ -356,7 +362,7 @@
     <!--End Image Banners-->
 
     <!--New Arrivals-->
-    
+
     <!--End Featured Product-->
 </div>
 <!--End Body Content-->

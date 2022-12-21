@@ -140,7 +140,6 @@ module.exports = {
         //console.log(number, "-------------------------------------------------");
         return new Promise((res, rej) => {
             db.get().collection(collection.USER_COLLECTION).findOne({ mobno: number }).then((response) => {
-                //console.log(response);
                 if (response) {
 
                     if (response.status) {

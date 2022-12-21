@@ -16,17 +16,20 @@ const { userProductListPageination } = require('../public/javascripts/middleware
 // let AUTH_TOKEN ="a345031346e877f3c7eb2f5ef3b5147d"
 // let SERVICE_ID ="MGd1852ec93777febfc9be0b918abea841"
 //--------------sanjay----------------------
-// let ACCOUNT_SID = "ACfe1eba825c74e32127ca7ac900de9875";
-// let AUTH_TOKEN = "ff619eb11c26c44614e278c303b5af67";
-// let SERVICE_ID = "VA71ad0a52ce808cb7b470188e2702054e";
+let ACCOUNT_SID = "ACfe1eba825c74e32127ca7ac900de9875";
+let AUTH_TOKEN = "ff619eb11c26c44614e278c303b5af67";
+const SERVICE_ID = "VA71ad0a52ce808cb7b470188e2702054e";
 //----------------------rahul-------------------
 // let ACCOUNT_SID = "ACf72c50f8c289190335d2beeabaee4ba4";
 // let AUTH_TOKEN = "b7dc01beefad3209f2f3157dd6b8d8e0";
 // let SERVICE_ID = "VA1773037b4ec7259ce2818c077e26f20e";
+// let ACCOUNT_SID = 'ACfe1eba825c74e32127ca7ac900de9875';
+// let AUTH_TOKEN ='ff619eb11c26c44614e278c303b5af67';
+// let SERVICE_ID ='VA71ad0a52ce808cb7b470188e2702054e';
 
-let ACCOUNT_SID = process.env.TWILIOACCOUNTSID;
-let AUTH_TOKEN = process.env.TWILIOAUTHTOKEN;
-let SERVICE_ID = process.env.TWILIOSERVICEID;
+// let ACCOUNT_SID = process.env.TWILIOACCOUNTSID;
+// let AUTH_TOKEN = process.env.TWILIOAUTHTOKEN;
+// let SERVICE_ID = process.env.TWILIOSERVICEID;
 const client = require("twilio")(ACCOUNT_SID, AUTH_TOKEN);
 
 const paypal = require('paypal-rest-sdk');
@@ -49,12 +52,12 @@ router.get('/', async function (req, res, next) {
 
 
   if (req.session.loggedIn) {
-  let banner = await userHelpers.getBanners()
+    let banner = await userHelpers.getBanners()
 
 
     let user = req.session.user
 
-    res.render('user/home', { userHeader: true, user,banner })
+    res.render('user/home', { userHeader: true, user, banner })
   } else
 
 
@@ -164,28 +167,23 @@ router.get("/otplogin", (req, res) => {
 //OTP submit
 router.post('/otpsubmit', (req, res) => {
   let number = req.body.otpphnno;
-   usernumber = number
+  usernumber = number
   let otpnumber = number;
-
-
-
   userHelpers.userStatusForOtp(number).then((response) => {
+    console.log(response,'otpsubmit route response');
     if (response.status) {
-      let errormsg = response.message
-
-      client.verify.services(SERVICE_ID)
-        .verifications.create({
-          to: `+91${otpnumber}`,
-          channel: "sms"
-        })
-        .then((data) => {
-          //(data);
-          res.render('user/otpsubmit')
-        })
+      console.log(response.status,'status');
+      console.log('test1');
+      client.verify.services(SERVICE_ID).verifications.create({ to: `+91${otpnumber}`, channel: "sms" }).then((data) => {
+        console.log('test2');
+        console.log(data, 'data');
+        res.render('user/otpsubmit')
+      })
         .catch((err) => {
           //(err);
         })
     } else {
+      console.log('test3');
       message = response.message;
       res.render('user/otplogin', { message })
     }
@@ -202,19 +200,19 @@ router.post('/otpverify', (req, res) => {
       to: `+91${otpnumber}`,
       code: chknumber,
     })
-    .then(async(data) => {
+    .then(async (data) => {
       if (data.valid == true) {
-       let otpLoginData=await userHelpers.doLoginOtp(otpnumber)
+        let otpLoginData = await userHelpers.doLoginOtp(otpnumber)
 
 
 
-          req.session.user = otpLoginData.user
-          req.session.loggedIn=true;
-          let user = req.session.user
+        req.session.user = otpLoginData.user
+        req.session.loggedIn = true;
+        let user = req.session.user
 
 
 
-          res.redirect('/')
+        res.redirect('/')
       } else {
         req.session.message = "invalid otp"
         let msg = "invalid OTP please enter valid OTP!!"
@@ -232,7 +230,7 @@ router.get('/resendotp', (req, res) => {
         channel: "sms"
       })
       .then(() => {
-    res.render('user/otpsubmit')
+        res.render('user/otpsubmit')
       })
 })
 //update user details
@@ -305,10 +303,10 @@ router.get('/cart', verifyLogin, async (req, res) => {
 
 
 
-  res.render('user/usercart', { userHeader: true, products, grandtotal, user, cartCount })
-  }else{
+    res.render('user/usercart', { userHeader: true, products, grandtotal, user, cartCount })
+  } else {
 
-  res.render('user/usercart',{ userHeader: true,user})
+    res.render('user/usercart', { userHeader: true, user })
   }
 })
 router.get('/product_show', (req, res) => {
@@ -331,9 +329,9 @@ router.post('/change-product-quantity', async (req, res, next) => {
 // ----------------------------placeorder confirm get--------------------------------------------------
 router.get('/place_order', verifyLogin, async (req, res) => {
   let user = await userHelpers.getUserData(req.session.user._id)
-  if (user.coupon != null) { 
+  if (user.coupon != null) {
     let couponPercent = parseInt(user.coupon.Offer_Percentage)
-    let maxAmount=parseInt(user.coupon.max_amount)
+    let maxAmount = parseInt(user.coupon.max_amount)
 
 
 
@@ -341,8 +339,8 @@ router.get('/place_order', verifyLogin, async (req, res) => {
     let total = await userHelpers.getGrandTotal(req.session.user._id)
     let grandtotal = total
     let offerAmount = parseInt((couponPercent * grandtotal) / 100)
-    if(offerAmount>=maxAmount){
-      offerAmount=maxAmount
+    if (offerAmount >= maxAmount) {
+      offerAmount = maxAmount
     }
     let finalPrice = grandtotal - offerAmount
     let products = await userHelpers.getCartProducts(req.session.user._id)
@@ -373,7 +371,7 @@ router.post('/placeorderconfirm', async (req, res) => {
 
 
     let orderId1 = orderid
-    req.session.orderid=orderid
+    req.session.orderid = orderid
     let orderId = orderid.insertedId
     if (req.body['payment-method'] == 'cod') {
       orderId1.details.forEach((element) => {
@@ -407,7 +405,7 @@ router.post('/placeorderconfirm', async (req, res) => {
 router.get('/order_success', verifyLogin, async (req, res) => {
   let userId = req.session.user._id
   let orderId = (req.query.orderId)
-  let orderid=req.session.orderid.insertedId
+  let orderid = req.session.orderid.insertedId
 
 
 
@@ -416,16 +414,16 @@ router.get('/order_success', verifyLogin, async (req, res) => {
 
 
 
-  let orderdata=await userHelpers.getCartProductsDetails(orderid)
+  let orderdata = await userHelpers.getCartProductsDetails(orderid)
 
 
 
-    orderdata.forEach((element) => {
+  orderdata.forEach((element) => {
 
 
 
-      userHelpers.productStockDecrement(element)
-    })
+    userHelpers.productStockDecrement(element)
+  })
   if (user.coupon) {
     let couponId = user.coupon._id
     await userHelpers.getSuccessStatus(orderId, userId)
@@ -522,7 +520,16 @@ router.get('/orders', verifyLogin, async (req, res) => {
   res.render('user/orders', { user, orders, userHeader: true })
 })
 //---------------------------order summary and invoice in user account page-----------------------------------
-router.get('/ordersummary',verifyLogin,async(req,res)=>{})
+router.get('/ordersummary', verifyLogin, async (req, res) => {
+  let user = req.session.user
+  let userId = req.session.user._id
+  let order = await userHelpers.getUserOrders(req.session.user._id)
+console.log("order");
+console.log(order);
+console.log("order");
+  res.render('user/ordersummary',{user,userHeader:true,order})
+})
+ 
 
 
 //------------------------------------- user Account------------------------------------
@@ -560,7 +567,7 @@ router.post('/couponApply', async (req, res) => {
 
   let grandTotal = await userHelpers.getGrandTotal(req.session.user._id)
   await userHelpers.couponApplyFunction(userId, req.body.coupon, grandTotal).then((response) => {
-   
+
 
     res.json({ response })
   })
@@ -595,32 +602,31 @@ router.post('/products/testroute', async (req, res) => {
 })
 
 // -----------------------------wallet history-----------------------------------------------
-router.get('/wallethistory',verifyLogin,async(req,res)=>{
+router.get('/wallethistory', verifyLogin, async (req, res) => {
   let user = req.session.user
 
   let userId = ObjectId(req.session.user._id)
-    let getWalletHistoryDataa= await userHelpers.getWalletDetails(userId)
+  let getWalletHistoryDataa = await userHelpers.getWalletDetails(userId)
   let userdata = await userHelpers.getUserData(userId)
 
   //  dataDetails
-   if(getWalletHistoryDataa){
+  if (getWalletHistoryDataa) {
 
 
 
-   res.render('user/wallet_history',{userHeader: true,user,getWalletHistoryDataa,userdata}) 
-   }else{
-  let user = req.session.user
+    res.render('user/wallet_history', { userHeader: true, user, getWalletHistoryDataa, userdata })
+  } else {
+    let user = req.session.user
 
-   res.render('user/wallet_history', {userHeader: true,user,userdata}) 
+    res.render('user/wallet_history', { userHeader: true, user, userdata })
 
-   }
- 
-}) 
+  }
+
+})
 
 
-router.get('/wallethistoryback',(req,res)=>{
+router.get('/wallethistoryback', (req, res) => {
 
   res.redirect('/useraccount')
 })
-module.exports = router; 
-   
+module.exports = router;
